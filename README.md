@@ -1,5 +1,5 @@
 # Second Project Meeting
-1. Project Title: "Untitled Space Game"
+1. Project Title: "Space Adventures"
     * A 2d game where the user controls a spaceship and shoots at aliens (that can shoot back), asteroids, and other objects. Players will earn more points based on what targets they shoot and how long they last without dying. 
 2. Language: "Java"
 3. Currently using the Java AWT API
