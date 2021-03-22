@@ -8,9 +8,9 @@ public class Projectile extends GameObject
     String projectileTexture;
 
 
-    public Projectile(float xPosition, float yPosition, ID id)
+    public Projectile(float xPosition, float yPosition, ID id, Team team)
     {
-        super(xPosition,yPosition,id);
+        super(xPosition,yPosition,id, team);
         xVector = 0;
         yVector = -1;
         speed = 5.0f;
