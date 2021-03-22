@@ -12,11 +12,22 @@ public class Projectile extends GameObject
     {
         super(xPosition,yPosition,id, team);
         xVector = 0;
-        yVector = -1;
+        //yVector = -1;
         speed = 5.0f;
         width = height = 16;
-        projectileTexture = "projectile.png";
+
         damage = 1;
+
+        if(this.team == Team.Friend)
+        {
+            yVector = -1;
+            projectileTexture = "FriendProjectile.png";
+        }
+        else
+        {
+            yVector = 1;
+            projectileTexture = "EnemyProjectile.png";
+        }
     }
 
     @Override

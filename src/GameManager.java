@@ -7,6 +7,7 @@ import MyGame.Game;
 
 // FriendProjectile and EnemyProjectile
 // or Projectile(Team)
+// iterator cannot access current element or previous....cant change objects in enhanced for loop
 
 public class GameManager {
 
