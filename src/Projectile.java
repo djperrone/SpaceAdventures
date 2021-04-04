@@ -5,46 +5,23 @@ import java.awt.*;
 public class Projectile extends GameObject
 {
 
-    String projectileTexture;
-
-
-    public Projectile(float xPosition, float yPosition, ID id, Team team)
+    public Projectile(SpaceShip owner)
     {
-        super(xPosition,yPosition,id, team);
+        super(owner.getxPosition(),owner.getyPosition());
+
         xVector = 0;
-        //yVector = -1;
         speed = 5.0f;
         width = height = 16;
-
         damage = 1;
+        //texture = someFile
 
-        if(this.team == Team.Friend)
-        {
-            yVector = -1;
-            projectileTexture = "FriendProjectile.png";
-        }
-        else
-        {
-            yVector = 1;
-            projectileTexture = "EnemyProjectile.png";
-        }
+        yVector = owner.direction;
     }
 
-    @Override
+    //@Override
     public void tick()
     {
-        yPosition += yVector * speed;
+        this.yPosition += yVector * speed;
     }
 
-    @Override
-    public void render(Graphics g)
-    {
-
-    }
-
-    @Override
-    public Rectangle getBounds()
-    {
-        return new Rectangle((int)xPosition,(int)yPosition,width,height);
-    }
 }
