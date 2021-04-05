@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Asteroid extends GameObject implements Collidable {
+public class Asteroid extends MovableHealthyObject implements Collidable {
     protected float speed;
     protected float direction;
 
