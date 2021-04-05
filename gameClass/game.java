@@ -1,4 +1,4 @@
-package MyGame;
+package SpaceAdventures;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
