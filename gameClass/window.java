@@ -1,4 +1,4 @@
-package MyGame;
+package SpaceAdventures;
 import javax.swing.*;
 
 import java.awt.*;
