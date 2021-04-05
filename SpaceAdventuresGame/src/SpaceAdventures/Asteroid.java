@@ -1,4 +1,4 @@
-package MyGame;
+package SpaceAdventures;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -28,7 +28,7 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
         // TODO Handle Asteroid-Asteroid collision.
     }
 
-    public void collide(final Player plyer) {
+    public void collide(final Player player) {
         // TODO Handle Asteroid-Player collision.
     }
 
@@ -36,8 +36,13 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
         // TODO Handle Asteroid-projectile collision.
     }
 
-    public void collide(final Ufo spaceship) {
+    public void collide(final UFO spaceship) {
         // TODO Handle Asteroid-UFO collision.
+    }
+
+    @Override
+    public void collide(MovableHealthyObject other) {
+
     }
 
     @Override
