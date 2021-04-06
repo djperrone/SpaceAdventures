@@ -10,9 +10,11 @@ public abstract class SpaceShip extends MovableHealthyObject {
     }
 
     public SpaceShip(float xPosition, float yPosition) {
+        super();
     }
 
     public SpaceShip() {
+        super();
 
     }
 
