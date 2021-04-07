@@ -3,8 +3,7 @@ package SpaceAdventures;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class Renderer extends Canvas{
-
+public class Renderer extends Canvas {
     //BufferedImage texture;
 
     Graphics painter;

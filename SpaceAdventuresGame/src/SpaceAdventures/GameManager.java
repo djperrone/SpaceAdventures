@@ -1,14 +1,9 @@
 package SpaceAdventures;
 
-import java.util.LinkedList;
 import java.util.Iterator;
-
-// FriendProjectile and EnemyProjectile
-// or Projectile(Team)
-// iterator cannot access current element or previous....cant change objects in enhanced for loop
+import java.util.LinkedList;
 
 public class GameManager {
-
     Game game;
     Player player;
     Renderer renderer;
@@ -89,37 +84,7 @@ public class GameManager {
 
     public void handleCollisionEvent(MovableHealthyObject objectA, MovableHealthyObject objectB)
     {
-        objectA.setHealth(objectA.getHealth()-1);//-objectb.getDamage()
-        objectB.setHealth(objectB.getHealth()-1); //- objectA.getDamage()
+        objectA.accept(objectB.getCollideHandler());
     }
-
-//    public void spawnPlayer()
-//    {
-//
-//    }
-//
-//    public void spawnAsteroid(float xPosition, float yPosition)
-//    {
-//        Asteroid asteroid = new Asteroid(xPosition, yPosition, ID.Asteroid, ID.Enemy);
-//        this.objectList.add(asteroid);
-//    }
-//
-//
-//    public void spawnProjectile(float xPosition, float yPosition, ID team)
-//    {
-//        //Projectile projectile = new Projectile(xPosition,yPosition,ID.Projectile, team);
-//        //this.objectList.add(projectile);
-//    }
-//    public void spawnFriendlyProjectile(float xPosition, float yPosition)
-//    {
-//        //Projectile projectile = new Projectile(xPosition,yPosition,ID.Projectile, ID.Friend);
-//        //this.objectList.add(projectile);
-//    }
-//    public void spawnEnemyProjectile(float xPosition, float yPosition)
-//    {
-//        //Projectile projectile = new Projectile(xPosition,yPosition,ID.Projectile, ID.Enemy);
-//        //this.objectList.add(projectile);
-//    }
-
 
 }
