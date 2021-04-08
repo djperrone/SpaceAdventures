@@ -19,7 +19,7 @@ public class Projectile extends MovableHealthyObject
     //@Override
     public void tick()
     {
-        this.yPosition += yVector * speed;
+        this.yPosition += (yVector * speed);
     }
 
 }

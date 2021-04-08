@@ -4,9 +4,9 @@ public abstract class SpaceShip extends MovableHealthyObject {
 
     Gun gun;
 
-    public SpaceShip(float xPosition, float yPosition,GameManager manager, String texture)
+    public SpaceShip(float xPosition, float yPosition,GameManager manager)
     {
-        super(xPosition, yPosition, manager,texture);
+        super(xPosition, yPosition, manager);
     }
 
     public SpaceShip(float xPosition, float yPosition) {
@@ -19,4 +19,7 @@ public abstract class SpaceShip extends MovableHealthyObject {
     }
 
     abstract void fireGun();
+
+    public void tick() {
+    }
 }

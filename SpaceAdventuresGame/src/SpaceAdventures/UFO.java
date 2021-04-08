@@ -3,7 +3,7 @@ package SpaceAdventures;
 public class UFO extends SpaceShip{
 
     public UFO(float xPosition, float yPosition, GameManager manager, String texture) {
-        super(xPosition, yPosition, manager, texture);
+        super();
     }
 
     public UFO(float xPosition, float yPosition) {

@@ -64,6 +64,11 @@ public class GameObject {
 
     }
 
+    public GameObject(float xPosition, float yPosition, GameManager manager) {
+
+
+    }
+
 
     public ID getId() {
         return id;

@@ -1,15 +1,35 @@
 package SpaceAdventures;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.Buffer;
 
 public class Game extends Canvas implements Runnable {
+
+    private static final long serialVersionUID = 8886785132605953826L;
     public static final int WIDTH = 640, HEIGHT = WIDTH/12 *9;
     private Thread thread;
     private boolean running = false;
 
+    private GameManager manager;
+    //private Renderer renderer;
+    private Player player;
+    private BufferedImage img;
+
+
+
+
     public Game(){
 
+
+        player = new Player(WIDTH/2-32, 1);
+        //renderer = new Renderer();
+        manager = new GameManager(this, player);
+        this.addKeyListener(new KeyInput(player));
         new Window(WIDTH, HEIGHT, "Space Adventures", this);
 
     }
@@ -25,8 +45,11 @@ public class Game extends Canvas implements Runnable {
         }catch(Exception e){
             e.printStackTrace();
         }
+        thread = new Thread(this);
+        thread.start();
     }
     public void run(){
+        this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
@@ -54,6 +77,8 @@ public class Game extends Canvas implements Runnable {
     }
     private void tick(){
 
+        manager.tick();
+
     }
     private void render(){
         BufferStrategy bs = this.getBufferStrategy();
@@ -64,8 +89,21 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
+
+
+        manager.render(g, bs);
+
+//        try {
+//            img = ImageIO.read(new File("assets/strawberry.jpg"));
+//        } catch (IOException e) {}
+//
+//        g.drawImage(img, (int) WIDTH/2-32, HEIGHT/2-32, null);
+
+
         g.dispose();
         bs.show();
+
+
     }
 
     public static void main(String args[]){

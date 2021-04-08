@@ -78,6 +78,10 @@ public class MovableHealthyObject extends GameObject{
         super();
     }
 
+    public MovableHealthyObject(float xPosition, float yPosition, GameManager manager) {
+        super(xPosition,yPosition,manager);
+    }
+
 
     public float getSpeed() {
         return speed;

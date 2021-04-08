@@ -1,25 +1,31 @@
 package SpaceAdventures;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Iterator;
 
 // FriendProjectile and EnemyProjectile
 // or Projectile(Team)
 // iterator cannot access current element or previous....cant change objects in enhanced for loop
-
 public class GameManager {
+    BufferedImage img;
 
     Game game;
-    Player player;
+    private Player player;
     Renderer renderer;
     Spawner spawner;
     LinkedList<MovableHealthyObject> objectList;
 
-    GameManager(Game game, Renderer renderer)
+    GameManager(Game game,Player player)
     {
         this.game = game;
-        this.renderer = renderer;
-        this.player = new Player();
+        this.renderer = new Renderer();
+        this.player = player;
         objectList = new LinkedList<MovableHealthyObject>();
         spawner = new Spawner(objectList);
 
@@ -27,19 +33,29 @@ public class GameManager {
 
     public void tick()
     {
+        player.tick();
         checkForCollisionEvents();
         update();
-        render();
+       // render();
     }
 
-    public void render()
+    public void render(Graphics g, BufferStrategy bs)
     {
-        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
-        {
-            MovableHealthyObject tempObject = it.next();
+        //this.renderer = new Renderer(g,bs);
+        renderer.render(g,bs,player);
+//        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+//        {
+//            MovableHealthyObject tempObject = it.next();
+//
+//            renderer.render(tempObject);
+//        }
 
-            renderer.render(tempObject);
-        }
+
+//        try {
+//            img = ImageIO.read(new File("assets/strawberry.jpg"));
+//        } catch (IOException e) {}
+
+        //g.drawImage(player.imageBuffer, (int) game.WIDTH/2-32, game.HEIGHT/2-32, null);
     }
 
     public void update()
