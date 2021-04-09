@@ -2,7 +2,7 @@ package SpaceAdventures;
 
 public abstract class SpaceShip extends MovableHealthyObject {
 
-    Gun gun;
+    DefaultSpaceShipGun gun;
 
     public SpaceShip(float xPosition, float yPosition,GameManager manager)
     {

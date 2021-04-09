@@ -11,8 +11,8 @@ public class Player extends SpaceShip {
     public Player(float xPosition, float yPosition) {
         super();
         System.out.println("Created Player!\n");
-        this.textureName = "assets/ship2.jpg";
-        this.manager = manager;
+        this.textureName = "artwork/Spaceship.png";
+
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.speed = 5;
@@ -20,6 +20,29 @@ public class Player extends SpaceShip {
         try {
             this.imageBuffer = ImageIO.read(new File(textureName));
         } catch (IOException e) {}
+
+        gun = new DefaultSpaceShipGun(this);
+
+        //BufferedImage imageBuffer = new BufferedImage((int)xPosition,(int)yPosition,BufferedImage.TYPE_INT_ARGB);
+
+        //imageBuffer.getTransparency();
+
+    }
+    public Player(float xPosition, float yPosition, GameManager manager) {
+        super(xPosition,yPosition,manager);
+        System.out.println("Created Player!\n");
+        this.textureName = "artwork/Spaceship.png";
+        this.manager = manager;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.speed = 5;
+        direction = -1;
+
+        try {
+            this.imageBuffer = ImageIO.read(new File(textureName));
+        } catch (IOException e) {}
+
+        gun = new DefaultSpaceShipGun(this);
 
         //BufferedImage imageBuffer = new BufferedImage((int)xPosition,(int)yPosition,BufferedImage.TYPE_INT_ARGB);
 
@@ -39,8 +62,9 @@ public class Player extends SpaceShip {
     }
 
     @Override
-    void fireGun() {
-
+    void fireGun()
+    {
+        this.gun.spawnProjectile(this);
     }
 
     //@override
@@ -48,6 +72,6 @@ public class Player extends SpaceShip {
     {
         this.xPosition += (this.xVector * speed);
         this.yPosition += (this.yVector * speed);
-        System.out.println(xVector + yVector);
+        //System.out.println(xVector + yVector);
     }
 }

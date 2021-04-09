@@ -11,26 +11,28 @@ import java.nio.Buffer;
 public class Game extends Canvas implements Runnable {
 
     private static final long serialVersionUID = 8886785132605953826L;
-    public static final int WIDTH = 640, HEIGHT = WIDTH/12 *9;
+    public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
     private Thread thread;
     private boolean running = false;
 
     private GameManager manager;
     //private Renderer renderer;
-    private Player player;
+    //private Player player;
     private BufferedImage img;
-
-
-
+    private final int FPS = 60;
+    Asteroid a;
 
     public Game(){
 
-
-        player = new Player(WIDTH/2-32, 1);
+        //player = new Player(100, 1);
         //renderer = new Renderer();
-        manager = new GameManager(this, player);
-        this.addKeyListener(new KeyInput(player));
+        manager = new GameManager(this);
+
+        this.addKeyListener(new KeyInput(manager.player));
         new Window(WIDTH, HEIGHT, "Space Adventures", this);
+
+        a = new Asteroid(100, 1);
+        this.addMouseListener(new MouseInput(manager.player));
 
     }
     public synchronized void start(){
@@ -92,6 +94,8 @@ public class Game extends Canvas implements Runnable {
 
 
         manager.render(g, bs);
+
+        //manager.renderer.render(g,bs,a);
 
 //        try {
 //            img = ImageIO.read(new File("assets/strawberry.jpg"));

@@ -1,19 +1,32 @@
 package SpaceAdventures;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+
 public class Projectile extends MovableHealthyObject
 {
 
+    SpaceShip owner;
     public Projectile(SpaceShip owner)
     {
-        super(owner.getxPosition(),owner.getyPosition());
-
+        super();
+        this.owner = owner;
+        xPosition = owner.getxPosition();
+        yPosition = owner.getyPosition();
         xVector = 0;
-        speed = 5.0f;
+        speed = 2.0f;
         width = height = 16;
         damage = 1;
-        //texture = someFile
+        textureName = "assets/strawberry.jpg";
+        this.health = 1;
+        this.yVector = owner.direction;
 
         yVector = owner.direction;
+
+        try {
+            this.imageBuffer = ImageIO.read(new File(textureName));
+        } catch (IOException e) {}
     }
 
     //@Override

@@ -16,10 +16,13 @@ public class GameManager {
     BufferedImage img;
 
     Game game;
-    private Player player;
+    Player player;
     Renderer renderer;
     Spawner spawner;
     LinkedList<MovableHealthyObject> objectList;
+
+    long previousTime;
+    long currentTime;
 
     GameManager(Game game,Player player)
     {
@@ -28,6 +31,19 @@ public class GameManager {
         this.player = player;
         objectList = new LinkedList<MovableHealthyObject>();
         spawner = new Spawner(objectList);
+        previousTime = System.currentTimeMillis();
+        currentTime = 0;
+
+    }
+    GameManager(Game game)
+    {
+        this.game = game;
+        this.renderer = new Renderer();
+        this.player = new Player(100,100,this);
+        objectList = new LinkedList<MovableHealthyObject>();
+        spawner = new Spawner(objectList);
+        previousTime = System.currentTimeMillis();
+        currentTime = 0;
 
     }
 
@@ -35,20 +51,27 @@ public class GameManager {
     {
         player.tick();
         checkForCollisionEvents();
-        update();
-       // render();
+        updateList();
+        spawnAsteroids();
+
+        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        {
+            MovableHealthyObject tempObject = it.next();
+
+            tempObject.tick();
+        }
     }
 
     public void render(Graphics g, BufferStrategy bs)
     {
         //this.renderer = new Renderer(g,bs);
         renderer.render(g,bs,player);
-//        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
-//        {
-//            MovableHealthyObject tempObject = it.next();
-//
-//            renderer.render(tempObject);
-//        }
+        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        {
+            MovableHealthyObject tempObject = it.next();
+
+            renderer.render(g,bs,tempObject);
+        }
 
 
 //        try {
@@ -58,7 +81,7 @@ public class GameManager {
         //g.drawImage(player.imageBuffer, (int) game.WIDTH/2-32, game.HEIGHT/2-32, null);
     }
 
-    public void update()
+    public void updateList()
     {
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
@@ -73,6 +96,8 @@ public class GameManager {
                 it.remove();
             }
         }
+
+        spawner.cleanAsteroids();
     }
 
     public void checkForCollisionEvents()
@@ -108,6 +133,32 @@ public class GameManager {
         objectA.setHealth(objectA.getHealth()-1);//-objectb.getDamage()
         objectB.setHealth(objectB.getHealth()-1); //- objectA.getDamage()
     }
+
+    public void spawnAsteroids()
+    {
+        if(currentTime == 0)
+        {
+            spawner.spawnAsteroid();
+            previousTime = System.currentTimeMillis();
+            currentTime = previousTime;
+        }
+        else
+        {
+            currentTime = System.currentTimeMillis();
+            if(currentTime - previousTime >= 1000)
+            {
+                spawner.spawnAsteroid();
+                previousTime = currentTime;
+            }
+
+
+        }
+    }
+
+
+
+
+
 
 //    public void spawnPlayer()
 //    {

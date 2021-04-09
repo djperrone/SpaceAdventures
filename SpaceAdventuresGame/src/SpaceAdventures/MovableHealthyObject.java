@@ -11,6 +11,7 @@ public class MovableHealthyObject extends GameObject{
     protected float damage;
     protected float health;
     protected float direction;
+    protected float name;
 
     /**
      * Constructor for MovableHealthyObject

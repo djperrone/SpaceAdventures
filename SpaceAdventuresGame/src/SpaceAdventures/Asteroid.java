@@ -2,6 +2,9 @@ package SpaceAdventures;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,10 +13,36 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
     protected float speed;
     protected float direction;
 
-    public Asteroid(float xPosition, float yPosition, ID id, ID team) {
+
+    public Asteroid(float xPosition, float yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        this.id = id;
+        this.id = ID.Asteroid;
+        this.team = ID.Enemy;
+        this.health = 1;
+        name = xPosition;
+
+        this.speed = 1;
+        this.yVelocity = 1;
+        System.out.println("spawned asteroid! " + name);
+        this.textureName = "artwork/asteroid1.png";
+
+        try {
+            this.imageBuffer = ImageIO.read(new File(textureName));
+        } catch (IOException e) {}
+
+
+//        BufferedImage before = imageBuffer;
+//        int w = before.getWidth();
+//        int h = before.getHeight();
+//        BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+//        AffineTransform at = new AffineTransform();
+//        at.scale(1.0,1.0);
+//        AffineTransformOp scaleOp =
+//                new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+//        after = scaleOp.filter(before, after);
+//
+//        this.imageBuffer = after;
     }
 
     protected float xVelocity = xPosition*speed;
@@ -49,6 +78,7 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
     public void tick() {
         xPosition+=xVelocity;
         yPosition+=yVelocity;
+
     }
 
     @Override

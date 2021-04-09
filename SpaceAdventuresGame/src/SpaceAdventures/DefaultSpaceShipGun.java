@@ -1,11 +1,13 @@
 package SpaceAdventures;
 
-public class DefaultSpaceShipGun implements Gun{
+public class DefaultSpaceShipGun extends Gun{
     private SpaceShip owner;
 
     DefaultSpaceShipGun(SpaceShip owner)
     {
+        super(owner);
         this.owner = owner;
+
     }
 
     @Override
