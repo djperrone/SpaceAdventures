@@ -1,13 +1,19 @@
 package SpaceAdventures;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Iterator;
 
 // FriendProjectile and EnemyProjectile
 // or Projectile(Team)
 // iterator cannot access current element or previous....cant change objects in enhanced for loop
-
 public class GameManager {
+    BufferedImage img;
 
     Game game;
     Player player;
@@ -15,34 +21,67 @@ public class GameManager {
     Spawner spawner;
     LinkedList<MovableHealthyObject> objectList;
 
-    GameManager(Game game, Renderer renderer)
+    long previousTime;
+    long currentTime;
+
+    GameManager(Game game,Player player)
     {
         this.game = game;
-        this.renderer = renderer;
-        this.player = new Player();
+        this.renderer = new Renderer();
+        this.player = player;
         objectList = new LinkedList<MovableHealthyObject>();
         spawner = new Spawner(objectList);
+        previousTime = System.currentTimeMillis();
+        currentTime = 0;
+
+    }
+    GameManager(Game game)
+    {
+        this.game = game;
+        this.renderer = new Renderer();
+        this.player = new Player(100,100,this);
+        objectList = new LinkedList<MovableHealthyObject>();
+        spawner = new Spawner(objectList);
+        previousTime = System.currentTimeMillis();
+        currentTime = 0;
 
     }
 
     public void tick()
     {
+        player.tick();
         checkForCollisionEvents();
-        update();
-        render();
-    }
+        updateList();
+        spawnAsteroids();
 
-    public void render()
-    {
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
             MovableHealthyObject tempObject = it.next();
 
-            renderer.render(tempObject);
+            tempObject.tick();
         }
     }
 
-    public void update()
+    public void render(Graphics g, BufferStrategy bs)
+    {
+        //this.renderer = new Renderer(g,bs);
+        renderer.render(g,bs,player);
+        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        {
+            MovableHealthyObject tempObject = it.next();
+
+            renderer.render(g,bs,tempObject);
+        }
+
+
+//        try {
+//            img = ImageIO.read(new File("assets/strawberry.jpg"));
+//        } catch (IOException e) {}
+
+        //g.drawImage(player.imageBuffer, (int) game.WIDTH/2-32, game.HEIGHT/2-32, null);
+    }
+
+    public void updateList()
     {
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
@@ -57,6 +96,8 @@ public class GameManager {
                 it.remove();
             }
         }
+
+        spawner.cleanAsteroids();
     }
 
     public void checkForCollisionEvents()
@@ -92,6 +133,32 @@ public class GameManager {
         objectA.setHealth(objectA.getHealth()-1);//-objectb.getDamage()
         objectB.setHealth(objectB.getHealth()-1); //- objectA.getDamage()
     }
+
+    public void spawnAsteroids()
+    {
+        if(currentTime == 0)
+        {
+            spawner.spawnAsteroid();
+            previousTime = System.currentTimeMillis();
+            currentTime = previousTime;
+        }
+        else
+        {
+            currentTime = System.currentTimeMillis();
+            if(currentTime - previousTime >= 1000)
+            {
+                spawner.spawnAsteroid();
+                previousTime = currentTime;
+            }
+
+
+        }
+    }
+
+
+
+
+
 
 //    public void spawnPlayer()
 //    {
