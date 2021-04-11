@@ -1,5 +1,8 @@
 package SpaceAdventures;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public abstract class MovableHealthyObject extends GameObject implements Collidable{
     protected float speed;
     protected float xVector;
@@ -7,12 +10,12 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
 
     protected float damage;
     protected float health;
-    protected Team team;
+    protected float direction;
+    protected float name;
 
     /**
      * Constructor for MovableHealthyObject
      *
-     * @param team enum Team
      * @param id enum ID
      * @param xPosition float
      * @param yPosition float
@@ -26,14 +29,13 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
      * @param damage float
      * @param health float
      */
-    public MovableHealthyObject(Team team, ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale, float speed, float xVector, float yVector, float damage, float health){
+    public MovableHealthyObject(ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale, float speed, float xVector, float yVector, float damage, float health){
         super(id,xPosition,yPosition,width,height,textureName,scale);
         this.speed=speed;
         this.xVector=xVector;
         this.yVector=yVector;
         this.damage=damage;
         this.health=health;
-        this.team = team;
     }
 
     /**
@@ -46,8 +48,8 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
      * @param height int greater zero
      * @param textureName String
      */
-    public MovableHealthyObject(Team team, ID id, float xPosition, float yPosition, int width, int height, String textureName){
-        this(team,id,xPosition,yPosition,width,height,textureName,1f,0f,0f,0f,1f,1f);
+    public MovableHealthyObject(ID id, float xPosition, float yPosition, int width, int height, String textureName){
+        this(id,xPosition,yPosition,width,height,textureName,1f,0f,0f,0f,1f,1f);
     }
 
     /**
@@ -61,8 +63,24 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
      * @param textureName String
      * @param scale float greater zero
      */
-    public MovableHealthyObject(Team team, ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale){
-        this(team,id,xPosition,yPosition,width,height,textureName,scale,0f,0f,0f,1f,1f);
+    public MovableHealthyObject(ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale){
+        this(id,xPosition,yPosition,width,height,textureName,scale,0f,0f,0f,1f,1f);
+    }
+
+    public MovableHealthyObject(float xPosition, float yPosition, GameManager manager, String texture) {
+        super();
+    }
+
+    public MovableHealthyObject() {
+        super();
+    }
+
+    public MovableHealthyObject(float getxPosition, float getyPosition) {
+        super();
+    }
+
+    public MovableHealthyObject(float xPosition, float yPosition, GameManager manager) {
+        super(xPosition,yPosition,manager);
     }
 
 
@@ -90,6 +108,14 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
         this.yVector = yVector;
     }
 
+    public float getDamage() {
+        return damage;
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
     public void damage (float damageValue){
         if(this.health - damageValue < 0){
             this.health = 0;
@@ -99,18 +125,9 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
         }
     }
 
-    public float getDamage() {
-        return damage;
-    }
-
-    public float getHealth() {
-        return health;
-    }
-
     public void setHealth(float health) {
         this.health = health;
     }
-
     /**
      * returns whether object is alive
      *
@@ -127,4 +144,31 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
         setyPosition(newYPosition);
     };
 
+    public void tick() {
+    }
+
+    public void setDirection(float direction) {
+        this.direction = direction;
+    }
+
+    public float getDirection() {
+        return direction;
+    }
+
+    public BufferedImage getImageBuffer(){return this.imageBuffer;}
+
+    public Rectangle getBounds()
+    {
+        return new Rectangle((int)xPosition,(int)yPosition,width,height);
+    }
+
+    @Override
+    public void accept(CollideVisitor visitor) {
+
+    }
+
+    @Override
+    public CollideVisitor getCollideHandler() {
+        return null;
+    }
 }

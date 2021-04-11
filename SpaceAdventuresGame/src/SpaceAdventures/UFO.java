@@ -1,17 +1,27 @@
 package SpaceAdventures;
 
-public class UFO extends MovableHealthyObject{
-    public UFO(Team team, ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale, float speed, float xVector, float yVector, float damage, float health) {
-        super(team, id, xPosition, yPosition, width, height, textureName, scale, speed, xVector, yVector, damage, health);
+public class UFO extends SpaceShip{
+
+    public UFO(float xPosition, float yPosition, GameManager manager, String texture) {
+        super();
+    }
+
+    public UFO(float xPosition, float yPosition) {
+        super(xPosition, yPosition);
+    }
+
+    @Override
+    void fireGun() {
+
     }
 
     @Override
     public void accept(CollideVisitor visitor) {
-
+        visitor.collide(this);
     }
 
     @Override
     public CollideVisitor getCollideHandler() {
-        return null;
+        return new UFOCollideVisitor(this);
     }
 }

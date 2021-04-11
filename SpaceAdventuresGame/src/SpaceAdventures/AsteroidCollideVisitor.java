@@ -9,6 +9,7 @@ public class AsteroidCollideVisitor extends ACollideVisitor {
 
     public void collide(final Player player){
         player.damage(this.asteroid.damage);
+        System.out.println("Asteroid hit Player");
     }
 
     public void collide(final Projectile projectile){

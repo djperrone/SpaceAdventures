@@ -7,10 +7,34 @@ import java.io.File;
 import java.io.IOException;
 
 public class Asteroid extends MovableHealthyObject implements Collidable {
+    protected float speed;
+    protected float direction;
 
-    public Asteroid(Team team, ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale, float speed, float xVector, float yVector, float damage, float health) {
-        super(team, id, xPosition, yPosition, width, height, textureName, scale, speed, xVector, yVector, damage, health);
+    public Asteroid(float xPosition, float yPosition) {
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.id = ID.Asteroid;
+        this.team = Team.Enemy;
+        this.health = 1;
+        this.damage = 1;
+        this.width = 20;
+        this.height = 20;
+        name = xPosition;
+
+        this.speed = 1;
+        this.yVelocity = 1;
+        System.out.println("spawned asteroid! " + name + " " + height + " " + width);
+        this.textureName = "artwork/asteroid1.png";
+
+        try {
+            this.imageBuffer = ImageIO.read(new File(textureName));
+        } catch (IOException e) {
+        }
     }
+
+    protected float xVelocity = xPosition*speed;
+    protected float yVelocity = yPosition*speed;
+
 
     @Override
     public void accept(CollideVisitor visitor) {
@@ -21,4 +45,17 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
     public CollideVisitor getCollideHandler() {
         return new AsteroidCollideVisitor(this);
     }
+
+    @Override
+    public void tick() {
+        xPosition+=xVelocity;
+        yPosition+=yVelocity;
+
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle((int)xPosition, (int)yPosition, width = 32, height = 32);
+    }
+
 }

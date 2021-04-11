@@ -1,7 +1,11 @@
 package SpaceAdventures;
 
+import java.awt.image.BufferedImage;
+
 public class GameObject {
+
     protected ID id;
+    protected Team team;
     protected float xPosition;
     protected float yPosition;
 
@@ -9,6 +13,9 @@ public class GameObject {
     protected int height;
     protected String textureName;
     protected float scale;
+    protected GameManager manager;
+    protected BufferedImage imageBuffer;
+    protected float direction;
 
     /**
      * Constructor for GameObject
@@ -53,6 +60,14 @@ public class GameObject {
         this(id,xPosition,yPosition,width,height,textureName,1f);
     }
 
+    public GameObject() {
+
+    }
+
+    public GameObject(float xPosition, float yPosition, GameManager manager) {
+
+
+    }
 
 
     public ID getId() {
@@ -119,4 +134,6 @@ public class GameObject {
         }
         this.scale = scale;
     }
+
+
 }

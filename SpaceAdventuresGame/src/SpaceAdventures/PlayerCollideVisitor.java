@@ -1,6 +1,6 @@
 package SpaceAdventures;
 
-public class PlayerCollideVisitor {
+public class PlayerCollideVisitor extends ACollideVisitor {
     private Player player;
 
     public PlayerCollideVisitor(Player player){

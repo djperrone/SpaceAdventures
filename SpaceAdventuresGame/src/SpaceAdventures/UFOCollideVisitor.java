@@ -1,6 +1,6 @@
 package SpaceAdventures;
 
-public class UFOCollideVisitor {
+public class UFOCollideVisitor extends ACollideVisitor {
     private UFO ufo;
 
     public UFOCollideVisitor(UFO ufo){
