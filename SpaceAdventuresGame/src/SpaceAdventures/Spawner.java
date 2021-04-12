@@ -1,10 +1,10 @@
 package SpaceAdventures;
+
 import java.time.temporal.Temporal;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.TimerTask;
-
 
 public class Spawner{
     Random r = new Random();
@@ -30,7 +30,8 @@ public class Spawner{
     {
         int xPos = r.nextInt(WIDTH+1);
         int yPos = r.nextInt(HEIGHT+1);
-        objectList.add(new Asteroid(xPos,yPos));
+        objectList.add(new Asteroid((float)xPos,(float)yPos));
+
     }
 
     void cleanAsteroids()
@@ -42,7 +43,7 @@ public class Spawner{
             if(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT * 2 || tempObject.getxPosition() > WIDTH)
             {
                 System.out.println("Destroyed "+ tempObject.name);
-                it.remove();
+                tempObject.setHealth(0);
             }
 
             if(tempObject.isAlive())
@@ -54,7 +55,27 @@ public class Spawner{
                 it.remove();
             }
         }
+
     }
+
+//    void cleanAsteroids()
+//    {
+//        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+//        {
+//            MovableHealthyObject tempObject = it.next();
+//
+//            if(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT * 2 || tempObject.getxPosition() > WIDTH)
+//            {
+//                System.out.println("Destroyed "+ tempObject.name);
+//                it.remove();
+//            }
+//
+//            if(!(tempObject.isAlive()))
+//            {
+//                it.remove();
+//            }
+//        }
+//    }
 
     void spawnProjectile(SpaceShip owner)
     {

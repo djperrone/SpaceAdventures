@@ -18,7 +18,15 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.id = ID.Asteroid;
-        this.team = ID.Enemy;
+
+        this.team = Team.Enemy;
+        this.health = 1;
+        this.damage = 1;
+        this.width = 128;
+        this.height = 128;
+        name = xPosition;
+
+        this.team = Team.Enemy;
         this.health = 1;
         name = xPosition;
 
@@ -32,46 +40,29 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
         } catch (IOException e) {}
 
 
-//        BufferedImage before = imageBuffer;
-//        int w = before.getWidth();
-//        int h = before.getHeight();
-//        BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-//        AffineTransform at = new AffineTransform();
-//        at.scale(1.0,1.0);
-//        AffineTransformOp scaleOp =
-//                new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-//        after = scaleOp.filter(before, after);
-//
-//        this.imageBuffer = after;
+        this.speed = 1;
+        this.yVelocity = 1;
+        System.out.println("spawned asteroid! " + name + " " + height + " " + width);
+        this.textureName = "artwork/asteroid1.png";
+
+        try {
+            this.imageBuffer = ImageIO.read(new File(textureName));
+        } catch (IOException e) {
+        }
     }
 
     protected float xVelocity = xPosition*speed;
     protected float yVelocity = yPosition*speed;
 
-    public void collide(final Collidable other) {
-        // Call collide on the other object.
-        other.collide(this);
-    }
 
-    public void collide(final Asteroid asteroid) {
-        // TODO Handle Asteroid-Asteroid collision.
-    }
-
-    public void collide(final Player player) {
-        // TODO Handle Asteroid-Player collision.
-    }
-
-    public void collide(final Projectile projectile) {
-        // TODO Handle Asteroid-projectile collision.
-    }
-
-    public void collide(final UFO spaceship) {
-        // TODO Handle Asteroid-UFO collision.
+    @Override
+    public void accept(CollideVisitor visitor) {
+        visitor.collide(this);
     }
 
     @Override
-    public void collide(MovableHealthyObject other) {
-
+    public CollideVisitor getCollideHandler() {
+        return new AsteroidCollideVisitor(this);
     }
 
     @Override
@@ -85,4 +76,5 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
     public Rectangle getBounds() {
         return new Rectangle((int)xPosition, (int)yPosition, width = 32, height = 32);
     }
+
 }

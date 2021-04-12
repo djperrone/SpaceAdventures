@@ -1,3 +1,4 @@
+
 package SpaceAdventures;
 
 import java.awt.event.MouseEvent;
@@ -23,3 +24,4 @@ public class DefaultPlayerGun extends Gun{
 //
 //    }
 }
+

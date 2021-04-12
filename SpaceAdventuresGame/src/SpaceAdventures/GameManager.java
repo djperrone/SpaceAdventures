@@ -1,3 +1,4 @@
+
 package SpaceAdventures;
 
 import javax.imageio.ImageIO;
@@ -13,6 +14,7 @@ import java.util.Iterator;
 // or Projectile(Team)
 // iterator cannot access current element or previous....cant change objects in enhanced for loop
 public class GameManager {
+    public static final int WIDTH = 640, HEIGHT = WIDTH/12 *9;
     BufferedImage img;
 
     Game game;
@@ -30,6 +32,7 @@ public class GameManager {
         this.renderer = new Renderer();
         this.player = player;
         objectList = new LinkedList<MovableHealthyObject>();
+        objectList.add(player);
         spawner = new Spawner(objectList);
         previousTime = System.currentTimeMillis();
         currentTime = 0;
@@ -41,15 +44,21 @@ public class GameManager {
         this.renderer = new Renderer();
         this.player = new Player(100,100,this);
         objectList = new LinkedList<MovableHealthyObject>();
+        objectList.add(player);
         spawner = new Spawner(objectList);
         previousTime = System.currentTimeMillis();
         currentTime = 0;
+        System.out.println(player.health);
 
     }
 
     public void tick()
     {
-        player.tick();
+        if (!player.isAlive()) {
+            System.out.println("Game Over ");
+            game.stop();
+        }
+
         checkForCollisionEvents();
         updateList();
         spawnAsteroids();
@@ -65,7 +74,7 @@ public class GameManager {
     public void render(Graphics g, BufferStrategy bs)
     {
         //this.renderer = new Renderer(g,bs);
-        renderer.render(g,bs,player);
+        //renderer.render(g,bs,player);
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
             MovableHealthyObject tempObject = it.next();
@@ -87,21 +96,26 @@ public class GameManager {
         {
             MovableHealthyObject tempObject = it.next();
 
-            if(tempObject.isAlive())
+            if(tempObject.isAlive() && !(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT * 2 || tempObject.getxPosition() > WIDTH || tempObject.getyPosition() < 0))
             {
                 tempObject.tick();
             }
             else
             {
                 it.remove();
+                if(player == tempObject){
+                    System.out.println("player removed");
+                }
+                else{
+                    System.out.println("something removed");
+                }
             }
         }
-
-        spawner.cleanAsteroids();
     }
 
     public void checkForCollisionEvents()
     {
+        //System.out.println(player.team);
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
             MovableHealthyObject currentObject = it.next();
@@ -109,9 +123,11 @@ public class GameManager {
             for(Iterator<MovableHealthyObject> otherIt = objectList.iterator(); otherIt.hasNext();)
             {
                 MovableHealthyObject other = otherIt.next();
-
-                if(!isOnSameTeam(currentObject, other) && isColliding(currentObject, other))
-                {
+                if(isColliding(currentObject, other)){
+                    System.out.println("Collision " + isOnSameTeam(currentObject, other));
+                }
+                if(!isOnSameTeam(currentObject, other) && isColliding(currentObject, other)){
+                    System.out.println("Collision Detected");
                     handleCollisionEvent(currentObject,other);
                 }
             }
@@ -128,10 +144,10 @@ public class GameManager {
         return objectA.getBounds().intersects(objectB.getBounds());
     }
 
+
     public void handleCollisionEvent(MovableHealthyObject objectA, MovableHealthyObject objectB)
     {
-        objectA.setHealth(objectA.getHealth()-1);//-objectb.getDamage()
-        objectB.setHealth(objectB.getHealth()-1); //- objectA.getDamage()
+        objectA.accept(objectB.getCollideHandler());
     }
 
     public void spawnAsteroids()
@@ -150,15 +166,8 @@ public class GameManager {
                 spawner.spawnAsteroid();
                 previousTime = currentTime;
             }
-
-
         }
     }
-
-
-
-
-
 
 //    public void spawnPlayer()
 //    {
@@ -188,5 +197,6 @@ public class GameManager {
 //        //this.objectList.add(projectile);
 //    }
 
-
 }
+
+

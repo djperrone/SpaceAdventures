@@ -2,7 +2,8 @@ package SpaceAdventures;
 
 import java.awt.event.MouseAdapter;
 
-public class Gun extends MouseAdapter {
+
+public abstract class Gun extends MouseAdapter {
 
     SpaceShip owner;
     Gun(SpaceShip owner)
@@ -16,3 +17,6 @@ public class Gun extends MouseAdapter {
 
 
 }
+
+
+

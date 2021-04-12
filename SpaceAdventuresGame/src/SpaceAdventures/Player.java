@@ -1,3 +1,4 @@
+
 package SpaceAdventures;
 
 import javax.imageio.ImageIO;
@@ -6,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Player extends SpaceShip {
-
+    public static final int WIDTH = 640, HEIGHT = WIDTH/12 *9;
 
     public Player(float xPosition, float yPosition) {
         super();
@@ -16,6 +17,11 @@ public class Player extends SpaceShip {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.speed = 5;
+        this.health = 3;
+        this.team = Team.Friend;
+        this.name = 69;
+        this.width = 128;
+        this.height = 128;
 
         try {
             this.imageBuffer = ImageIO.read(new File(textureName));
@@ -37,6 +43,11 @@ public class Player extends SpaceShip {
         this.yPosition = yPosition;
         this.speed = 5;
         direction = -1;
+        this.health = 3;
+        this.team = Team.Friend;
+        this.name = 69;
+        this.width = 128;
+        this.height = 128;
 
         try {
             this.imageBuffer = ImageIO.read(new File(textureName));
@@ -50,20 +61,21 @@ public class Player extends SpaceShip {
 
     }
 
-   // public Player(float xPosition, float yPosition) {
-       // super(xPosition, yPosition);
+    // public Player(float xPosition, float yPosition) {
+    // super(xPosition, yPosition);
     //}
 
     public Player() {
-
         super();
-
-
+        this.health = 3;
+        this.team = Team.Friend;
+        this.name = 69;
+        this.width = 128;
+        this.height = 128;
     }
 
     @Override
-    void fireGun()
-    {
+    void fireGun() {
         this.gun.spawnProjectile(this);
     }
 
@@ -73,5 +85,31 @@ public class Player extends SpaceShip {
         this.xPosition += (this.xVector * speed);
         this.yPosition += (this.yVector * speed);
         //System.out.println(xVector + yVector);
+
+        if (xPosition < 0){
+            xPosition = 0;
+        }
+        else if (xPosition > WIDTH) {
+            xPosition = WIDTH;
+        }
+        if (yPosition < 0){
+            yPosition = 0;
+        }
+        else if (yPosition >= HEIGHT*2) {
+            yPosition = HEIGHT*2 - 1;
+        }
+    }
+
+    @Override
+    public void accept(CollideVisitor visitor) {
+        visitor.collide(this);
+    }
+
+    @Override
+    public CollideVisitor getCollideHandler() {
+        return new PlayerCollideVisitor(this);
     }
 }
+
+
+

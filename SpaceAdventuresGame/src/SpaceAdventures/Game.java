@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(new KeyInput(manager.player));
         new Window(WIDTH, HEIGHT, "Space Adventures", this);
 
-        a = new Asteroid(100, 1);
+        //a = new Asteroid(100, 1);
         this.addMouseListener(new MouseInput(manager.player));
 
     }
@@ -115,4 +115,3 @@ public class Game extends Canvas implements Runnable {
 
     }
 }
-

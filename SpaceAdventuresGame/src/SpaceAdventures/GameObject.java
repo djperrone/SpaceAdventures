@@ -1,3 +1,4 @@
+
 package SpaceAdventures;
 
 import java.awt.image.BufferedImage;
@@ -5,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class GameObject {
 
     protected ID id;
-    protected ID team;
+    protected Team team;
     protected float xPosition;
     protected float yPosition;
 

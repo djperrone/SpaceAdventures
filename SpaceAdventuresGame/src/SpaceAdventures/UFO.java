@@ -1,3 +1,4 @@
+
 package SpaceAdventures;
 
 public class UFO extends SpaceShip{
@@ -14,4 +15,16 @@ public class UFO extends SpaceShip{
     void fireGun() {
 
     }
+
+    @Override
+    public void accept(CollideVisitor visitor) {
+        visitor.collide(this);
+    }
+
+    @Override
+    public CollideVisitor getCollideHandler() {
+        return new UFOCollideVisitor(this);
+    }
 }
+
+
