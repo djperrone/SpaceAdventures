@@ -35,4 +35,13 @@ public class Projectile extends MovableHealthyObject
         this.yPosition += (yVector * speed);
     }
 
+
+    @Override
+    public void accept(CollideVisitor visitor) {
+        visitor.collide(this);
+    }
+
+    public CollideVisitor getCollideHandler() {
+        return new ProjectileCollideVisitor(this);
+    }
 }
