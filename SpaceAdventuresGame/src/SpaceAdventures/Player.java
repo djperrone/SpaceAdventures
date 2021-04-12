@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Player extends SpaceShip {
-    public static final int WIDTH = 640, HEIGHT = WIDTH/12 *9;
+    public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
 
     public Player(float xPosition, float yPosition) {
         super();

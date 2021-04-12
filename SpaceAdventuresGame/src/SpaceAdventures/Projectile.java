@@ -18,10 +18,11 @@ public class Projectile extends MovableHealthyObject
         speed = 2.0f;
         width = height = 80;
         damage = 1;
-        textureName = "assets/strawberry.jpg";
+        textureName = "assets/asteroid2.png";
         this.health = 1;
         this.yVector = owner.direction;
         this.team = owner.team;
+        this.id = ID.Projectile;
 
         yVector = owner.direction;
 

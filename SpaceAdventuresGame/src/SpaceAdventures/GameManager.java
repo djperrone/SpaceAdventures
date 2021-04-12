@@ -14,7 +14,7 @@ import java.util.Iterator;
 // or Projectile(Team)
 // iterator cannot access current element or previous....cant change objects in enhanced for loop
 public class GameManager {
-    public static final int WIDTH = 640, HEIGHT = WIDTH/12 *9;
+    public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
     BufferedImage img;
 
     Game game;
@@ -42,7 +42,7 @@ public class GameManager {
     {
         this.game = game;
         this.renderer = new Renderer();
-        this.player = new Player(100,100,this);
+        this.player = new Player(500,500,this);
         objectList = new LinkedList<MovableHealthyObject>();
         objectList.add(player);
         spawner = new Spawner(objectList);
@@ -60,6 +60,8 @@ public class GameManager {
         }
 
         checkForCollisionEvents();
+        spawner.cleanAsteroids();
+        spawner.cleanProjectiles();
         updateList();
         spawnAsteroids();
 
@@ -96,9 +98,9 @@ public class GameManager {
         {
             MovableHealthyObject tempObject = it.next();
 
-            if(tempObject.isAlive() && !(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT * 2 || tempObject.getxPosition() > WIDTH || tempObject.getyPosition() < 0))
+            if(tempObject.isAlive())
             {
-                tempObject.tick();
+                //tempObject.tick();
             }
             else
             {
@@ -124,7 +126,7 @@ public class GameManager {
             {
                 MovableHealthyObject other = otherIt.next();
                 if(isColliding(currentObject, other)){
-                    System.out.println("Collision " + isOnSameTeam(currentObject, other));
+                    //System.out.println("Collision " + isOnSameTeam(currentObject, other));
                 }
                 if(!isOnSameTeam(currentObject, other) && isColliding(currentObject, other)){
                     System.out.println("Collision Detected");
@@ -169,33 +171,6 @@ public class GameManager {
         }
     }
 
-//    public void spawnPlayer()
-//    {
-//
-//    }
-//
-//    public void spawnAsteroid(float xPosition, float yPosition)
-//    {
-//        Asteroid asteroid = new Asteroid(xPosition, yPosition, ID.Asteroid, ID.Enemy);
-//        this.objectList.add(asteroid);
-//    }
-//
-//
-//    public void spawnProjectile(float xPosition, float yPosition, ID team)
-//    {
-//        //Projectile projectile = new Projectile(xPosition,yPosition,ID.Projectile, team);
-//        //this.objectList.add(projectile);
-//    }
-//    public void spawnFriendlyProjectile(float xPosition, float yPosition)
-//    {
-//        //Projectile projectile = new Projectile(xPosition,yPosition,ID.Projectile, ID.Friend);
-//        //this.objectList.add(projectile);
-//    }
-//    public void spawnEnemyProjectile(float xPosition, float yPosition)
-//    {
-//        //Projectile projectile = new Projectile(xPosition,yPosition,ID.Projectile, ID.Enemy);
-//        //this.objectList.add(projectile);
-//    }
 
 }
 

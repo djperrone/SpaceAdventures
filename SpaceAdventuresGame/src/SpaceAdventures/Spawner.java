@@ -9,7 +9,7 @@ import java.util.TimerTask;
 public class Spawner{
     Random r = new Random();
     LinkedList<MovableHealthyObject> objectList;
-    public static final int WIDTH = 640, HEIGHT = WIDTH/12 *9;
+    public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
 
     Spawner(LinkedList<MovableHealthyObject> objectList)
     {
@@ -28,8 +28,9 @@ public class Spawner{
 
     void spawnAsteroid()
     {
-        int xPos = r.nextInt(WIDTH+1);
-        int yPos = r.nextInt(HEIGHT+1);
+        int xPos = r.nextInt(WIDTH+1) ;
+        int yPos = -100;
+
         objectList.add(new Asteroid((float)xPos,(float)yPos));
 
     }
@@ -40,22 +41,35 @@ public class Spawner{
         {
             MovableHealthyObject tempObject = it.next();
 
-            if(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT * 2 || tempObject.getxPosition() > WIDTH)
+            if(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT  || tempObject.getxPosition() > WIDTH)
             {
-                System.out.println("Destroyed "+ tempObject.name);
+                System.out.println("Destroyed asteroid");
                 tempObject.setHealth(0);
             }
 
-            if(tempObject.isAlive())
-            {
-                tempObject.tick();
-            }
-            else
-            {
-                it.remove();
-            }
+//            if(tempObject.isAlive())
+//            {
+//                tempObject.tick();
+//            }
+//            else
+//            {
+//                it.remove();
+//            }
         }
 
+    }
+
+    void cleanProjectiles()
+    {
+        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();) {
+            MovableHealthyObject tempObject = it.next();
+
+            if (tempObject.getxPosition() > WIDTH || tempObject.getyPosition() < -100 || tempObject.getxPosition() < 0 && tempObject.getId() == ID.Projectile) {
+                System.out.println("Destroyed projectile");
+                tempObject.setHealth(0);
+
+            }
+        }
     }
 
 //    void cleanAsteroids()
