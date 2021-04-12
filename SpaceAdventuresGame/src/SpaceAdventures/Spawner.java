@@ -31,6 +31,31 @@ public class Spawner{
         int xPos = r.nextInt(WIDTH+1);
         int yPos = r.nextInt(HEIGHT+1);
         objectList.add(new Asteroid(xPos,yPos));
+
+    }
+
+    void cleanAsteroids()
+    {
+        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        {
+            MovableHealthyObject tempObject = it.next();
+
+            if(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT * 2 || tempObject.getxPosition() > WIDTH)
+            {
+                System.out.println("Destroyed "+ tempObject.name);
+                it.remove();
+            }
+
+            if(tempObject.isAlive())
+            {
+                tempObject.tick();
+            }
+            else
+            {
+                it.remove();
+            }
+        }
+
     }
 
 //    void cleanAsteroids()
