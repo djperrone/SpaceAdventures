@@ -40,5 +40,3 @@ public class Renderer extends Canvas{
     }
 
 }
-
-

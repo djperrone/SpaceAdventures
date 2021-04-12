@@ -110,6 +110,3 @@ public class Player extends SpaceShip {
         return new PlayerCollideVisitor(this);
     }
 }
-
-
-
