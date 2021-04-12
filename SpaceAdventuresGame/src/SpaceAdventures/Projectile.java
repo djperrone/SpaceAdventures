@@ -16,11 +16,12 @@ public class Projectile extends MovableHealthyObject
         yPosition = owner.getyPosition();
         xVector = 0;
         speed = 2.0f;
-        width = height = 16;
+        width = height = 80;
         damage = 1;
         textureName = "assets/strawberry.jpg";
         this.health = 1;
         this.yVector = owner.direction;
+        this.team = owner.team;
 
         yVector = owner.direction;
 

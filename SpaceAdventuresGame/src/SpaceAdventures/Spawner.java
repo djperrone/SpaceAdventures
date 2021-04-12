@@ -30,7 +30,7 @@ public class Spawner{
     {
         int xPos = r.nextInt(WIDTH+1);
         int yPos = r.nextInt(HEIGHT+1);
-        objectList.add(new Asteroid(xPos,yPos));
+        objectList.add(new Asteroid((float)xPos,(float)yPos));
 
     }
 
@@ -43,7 +43,7 @@ public class Spawner{
             if(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT * 2 || tempObject.getxPosition() > WIDTH)
             {
                 System.out.println("Destroyed "+ tempObject.name);
-                it.remove();
+                tempObject.setHealth(0);
             }
 
             if(tempObject.isAlive())
