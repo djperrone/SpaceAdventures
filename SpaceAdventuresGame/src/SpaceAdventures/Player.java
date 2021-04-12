@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 public class Player extends SpaceShip {
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
@@ -27,7 +28,7 @@ public class Player extends SpaceShip {
             this.imageBuffer = ImageIO.read(new File(textureName));
         } catch (IOException e) {}
 
-        gun = new DefaultSpaceShipGun(this);
+        gun = new DefaultSpaceShipGun(xPosition,yPosition,team,direction);
 
         //BufferedImage imageBuffer = new BufferedImage((int)xPosition,(int)yPosition,BufferedImage.TYPE_INT_ARGB);
 
@@ -53,7 +54,8 @@ public class Player extends SpaceShip {
             this.imageBuffer = ImageIO.read(new File(textureName));
         } catch (IOException e) {}
 
-        gun = new DefaultSpaceShipGun(this);
+        gun = new DefaultSpaceShipGun(xPosition,yPosition,team,direction);
+        this.ammo = new Vector<Projectile>();
 
         //BufferedImage imageBuffer = new BufferedImage((int)xPosition,(int)yPosition,BufferedImage.TYPE_INT_ARGB);
 
@@ -76,7 +78,7 @@ public class Player extends SpaceShip {
 
     @Override
     void fireGun() {
-        this.gun.spawnProjectile(this);
+        this.ammo.add(new Projectile(xPosition,yPosition,team,direction));
     }
 
     //@override

@@ -1,8 +1,11 @@
 package SpaceAdventures;
 
+import java.util.Vector;
+
 public abstract class SpaceShip extends MovableHealthyObject {
 
     DefaultSpaceShipGun gun;
+    Vector<Projectile> ammo;
 
     public SpaceShip(float xPosition, float yPosition,GameManager manager)
     {

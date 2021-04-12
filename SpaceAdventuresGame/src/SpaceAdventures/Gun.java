@@ -11,6 +11,10 @@ public abstract class Gun extends MouseAdapter {
         this.owner = owner;
     }
 
+    public Gun() {
+
+    }
+
     void spawnProjectile(SpaceShip owner) {
 
     }

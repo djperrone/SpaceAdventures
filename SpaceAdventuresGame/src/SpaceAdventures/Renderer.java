@@ -33,10 +33,10 @@ public class Renderer extends Canvas{
 //            this.createBufferStrategy(3);
 //        }
     }
-    public void render(Graphics g, BufferStrategy bs, MovableHealthyObject renderableObject) {
+    public void render(Graphics g, BufferStrategy bs, BufferedImage imageBuffer ,int xPosition, int yPosition) {
 
 
-        g.drawImage(renderableObject.imageBuffer, (int) renderableObject.getxPosition(), (int) renderableObject.getyPosition(), null);
+        g.drawImage(imageBuffer, xPosition, yPosition, null);
     }
 
 }

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.Vector;
 
 // FriendProjectile and EnemyProjectile
 // or Projectile(Team)
@@ -22,6 +23,7 @@ public class GameManager {
     Renderer renderer;
     Spawner spawner;
     LinkedList<MovableHealthyObject> objectList;
+    Vector<Projectile> projectileList;
 
     long previousTime;
     long currentTime;
@@ -37,6 +39,8 @@ public class GameManager {
         previousTime = System.currentTimeMillis();
         currentTime = 0;
 
+        this.projectileList = new Vector<Projectile>();
+
     }
     GameManager(Game game)
     {
@@ -50,6 +54,10 @@ public class GameManager {
         currentTime = 0;
         System.out.println(player.health);
 
+        LinkedList<MovableHealthyObject> otherList = objectList;
+
+        //objectList.toArray();
+
     }
 
     public void tick()
@@ -58,12 +66,15 @@ public class GameManager {
             System.out.println("Game Over ");
             game.stop();
         }
-
+        loadProjectiles(player.ammo);
         checkForCollisionEvents();
         spawner.cleanAsteroids();
         spawner.cleanProjectiles();
         updateList();
+
         spawnAsteroids();
+
+        //spawner.spawnProjectiles();
 
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
@@ -73,16 +84,32 @@ public class GameManager {
         }
     }
 
-    public void render(Graphics g, BufferStrategy bs)
+    public void loadProjectiles(Vector<Projectile> projectileVector)
+    {
+        this.objectList.addAll(projectileVector);
+
+        projectileVector.clear();
+    }
+
+    public void render(Graphics g, BufferStrategy bs, MovableHealthyObject[] objectArray)
     {
         //this.renderer = new Renderer(g,bs);
         //renderer.render(g,bs,player);
-        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
-        {
-            MovableHealthyObject tempObject = it.next();
 
-            renderer.render(g,bs,tempObject);
+        //MovableHealthyObject[] listCopy = objectList.toArray(new MovableHealthyObject[objectList.size()]);
+
+        for(MovableHealthyObject object : objectArray)
+        {
+            renderer.render(g,bs,object.getImageBuffer(), (int)object.getxPosition(), (int)object.getyPosition());
+
         }
+
+//        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+//        {
+//            MovableHealthyObject tempObject = it.next();
+//
+//            renderer.render(g,bs,tempObject.getImageBuffer(), (int)tempObject.getxPosition(), (int)tempObject.getyPosition());
+//        }
 
 
 //        try {
