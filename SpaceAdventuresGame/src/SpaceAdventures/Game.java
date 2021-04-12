@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.Buffer;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Game extends Canvas implements Runnable {
 
@@ -32,7 +34,7 @@ public class Game extends Canvas implements Runnable {
         new Window(WIDTH, HEIGHT, "Space Adventures", this);
 
         //a = new Asteroid(100, 1);
-        this.addMouseListener(new MouseInput(manager.player));
+        //this.addMouseListener(new MouseInput(manager.player));
 
     }
     public synchronized void start(){
@@ -50,7 +52,7 @@ public class Game extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
     }
-    public void run(){
+    public synchronized void run(){
         this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -67,7 +69,15 @@ public class Game extends Canvas implements Runnable {
                 delta--;
             }
             if(running)
-                render();
+            {
+                //thread.wait(1000);
+
+                //Collection<MovableHealthyObject> synchronizedList = Collections.synchronizedList(manager.objectList);
+                render(frozenObectList());
+
+                //render(frozenObectList());
+
+            }
             frames++;
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
@@ -75,14 +85,18 @@ public class Game extends Canvas implements Runnable {
                 frames = 0;
             }
         }
-        stop();
+        //stop();
     }
-    private void tick(){
+    private synchronized MovableHealthyObject[] frozenObectList()
+    {
+       return manager.objectList.toArray(new MovableHealthyObject[manager.objectList.size()]);
+    }
+    private synchronized void tick(){
 
         manager.tick();
 
     }
-    private void render(){
+    private synchronized void render(MovableHealthyObject[] objectArray){
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
             this.createBufferStrategy(3);
@@ -93,7 +107,7 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
 
-        manager.render(g, bs);
+        manager.render(g, bs, objectArray);
 
         //manager.renderer.render(g,bs,a);
 

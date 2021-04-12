@@ -38,6 +38,11 @@ public class KeyInput extends KeyAdapter
             a = true;
         }
 
+        if(key == KeyEvent.VK_SPACE)
+        {
+            player.ammo.add(new Projectile(player.getxPosition(), player.getyPosition(), player.team, player.getDirection()));
+        }
+
         if(key== KeyEvent.VK_ESCAPE) System.exit(1);
 
 

@@ -34,6 +34,12 @@ public class Spawner{
         objectList.add(new Asteroid((float)xPos,(float)yPos));
 
     }
+    void spawnProjectile(float xPosition, float yPosition, Team team, float direction)
+    {
+        objectList.add(new Projectile(xPosition,yPosition,team,direction));
+    }
+
+    //void spawnProjectiles()
 
     void cleanAsteroids()
     {
@@ -91,10 +97,7 @@ public class Spawner{
 //        }
 //    }
 
-    void spawnProjectile(SpaceShip owner)
-    {
-        objectList.add(new Projectile(owner));
-    }
+
 
 
 
