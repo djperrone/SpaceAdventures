@@ -32,14 +32,7 @@ public class Spawner{
         int yPos = -100;
 
         objectList.add(new Asteroid((float)xPos,(float)yPos));
-
     }
-    void spawnProjectile(float xPosition, float yPosition, Team team, float direction)
-    {
-        objectList.add(new Projectile(xPosition,yPosition,team,direction));
-    }
-
-    //void spawnProjectiles()
 
     void cleanAsteroids()
     {
@@ -52,17 +45,7 @@ public class Spawner{
                 System.out.println("Destroyed asteroid");
                 tempObject.setHealth(0);
             }
-
-//            if(tempObject.isAlive())
-//            {
-//                tempObject.tick();
-//            }
-//            else
-//            {
-//                it.remove();
-//            }
         }
-
     }
 
     void cleanProjectiles()
@@ -73,32 +56,7 @@ public class Spawner{
             if (tempObject.getxPosition() > WIDTH || tempObject.getyPosition() < -100 || tempObject.getxPosition() < 0 && tempObject.getId() == ID.Projectile) {
                 System.out.println("Destroyed projectile");
                 tempObject.setHealth(0);
-
             }
         }
     }
-
-//    void cleanAsteroids()
-//    {
-//        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
-//        {
-//            MovableHealthyObject tempObject = it.next();
-//
-//            if(tempObject.getxPosition() < 0 || tempObject.getyPosition() >= HEIGHT * 2 || tempObject.getxPosition() > WIDTH)
-//            {
-//                System.out.println("Destroyed "+ tempObject.name);
-//                it.remove();
-//            }
-//
-//            if(!(tempObject.isAlive()))
-//            {
-//                it.remove();
-//            }
-//        }
-//    }
-
-
-
-
-
 }

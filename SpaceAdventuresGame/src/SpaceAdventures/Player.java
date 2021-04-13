@@ -28,7 +28,7 @@ public class Player extends SpaceShip {
             this.imageBuffer = ImageIO.read(new File(textureName));
         } catch (IOException e) {}
 
-        gun = new DefaultSpaceShipGun(xPosition,yPosition,team,direction);
+        gun = new DefaultSpaceShipGun();
 
         //BufferedImage imageBuffer = new BufferedImage((int)xPosition,(int)yPosition,BufferedImage.TYPE_INT_ARGB);
 
@@ -50,35 +50,36 @@ public class Player extends SpaceShip {
         this.width = 128;
         this.height = 128;
 
+        this.gun = new DefaultSpaceShipGun();
+
         try {
             this.imageBuffer = ImageIO.read(new File(textureName));
         } catch (IOException e) {}
 
-        gun = new DefaultSpaceShipGun(xPosition,yPosition,team,direction);
-        this.ammo = new Vector<Projectile>();
-
-        //BufferedImage imageBuffer = new BufferedImage((int)xPosition,(int)yPosition,BufferedImage.TYPE_INT_ARGB);
-
-        //imageBuffer.getTransparency();
-
     }
 
-    // public Player(float xPosition, float yPosition) {
-    // super(xPosition, yPosition);
-    //}
+
 
     public Player() {
         super();
         this.health = 3;
         this.team = Team.Friend;
-        this.name = 69;
+        this.name = 1;
         this.width = 128;
         this.height = 128;
     }
 
+    public Gun getGun()
+    {
+        return  this.gun;
+    }
+
+
+
     @Override
-    void fireGun() {
-        this.ammo.add(new Projectile(xPosition,yPosition,team,direction));
+    public void fireGun() {
+        //this.projectileList.add(new Projectile(xPosition,yPosition,team,direction));
+        this.gun.spawnProjectile(xPosition,yPosition,team,direction);
     }
 
     //@override
