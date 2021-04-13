@@ -24,9 +24,14 @@ public class GameManager {
     private Spawner spawner;
     private LinkedList<MovableHealthyObject> objectList;
 
-    private long previousTime;
-    private long currentTime;
-//    GameManager(Game game,Player player)
+    private long asteroidPreviousTime;
+    private long asteroidCurrentTime;
+    private long UFOPreviousTime;
+    private long UFOCurrentTime;
+
+
+
+    //    GameManager(Game game,Player player)
 //    {
 //        this.game = game;
 //        this.renderer = new Renderer();
@@ -41,16 +46,14 @@ public class GameManager {
     {
         this.game = game;
         this.renderer = new Renderer();
-        this.player = new Player(500,500,this);
+        this.player = new Player(500,500);
         objectList = new LinkedList<MovableHealthyObject>();
         objectList.add(player);
         spawner = new Spawner(objectList);
-        previousTime = System.currentTimeMillis();
-        currentTime = 0;
+        asteroidPreviousTime = UFOPreviousTime = System.currentTimeMillis();
+        asteroidCurrentTime = UFOCurrentTime = 0;
         System.out.println(player.health);
         LinkedList<MovableHealthyObject> otherList = objectList;
-
-        //objectList.toArray();
 
     }
 
@@ -68,6 +71,7 @@ public class GameManager {
         updateList();
 
         spawnAsteroids();
+        spawnUFOs();
 
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
@@ -123,7 +127,6 @@ public class GameManager {
 
     public void checkForCollisionEvents()
     {
-        //System.out.println(player.team);
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
             MovableHealthyObject currentObject = it.next();
@@ -160,19 +163,41 @@ public class GameManager {
 
     public void spawnAsteroids()
     {
-        if(currentTime == 0)
+        if(asteroidCurrentTime == 0)
         {
             spawner.spawnAsteroid();
-            previousTime = System.currentTimeMillis();
-            currentTime = previousTime;
+
+
+            asteroidPreviousTime = System.currentTimeMillis();
+            asteroidCurrentTime = asteroidPreviousTime;
         }
         else
         {
-            currentTime = System.currentTimeMillis();
-            if(currentTime - previousTime >= 1000)
+            asteroidCurrentTime = System.currentTimeMillis();
+            if(asteroidCurrentTime - asteroidPreviousTime >= 1000)
             {
                 spawner.spawnAsteroid();
-                previousTime = currentTime;
+
+                asteroidPreviousTime = asteroidCurrentTime;
+            }
+        }
+    }
+
+    public void spawnUFOs()
+    {
+        if(UFOCurrentTime == 0)
+        {
+            spawner.spawnUFO();
+            UFOPreviousTime = System.currentTimeMillis();
+            UFOCurrentTime = UFOPreviousTime;
+        }
+        else
+        {
+            UFOCurrentTime = System.currentTimeMillis();
+            if(UFOCurrentTime - UFOPreviousTime >= 5000)
+            {
+                spawner.spawnUFO();
+                UFOPreviousTime = UFOCurrentTime;
             }
         }
     }

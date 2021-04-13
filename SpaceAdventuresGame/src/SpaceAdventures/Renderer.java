@@ -17,24 +17,12 @@ import java.awt.image.BufferedImage;
 
 public class Renderer extends Canvas{
 
-    //BufferedImage texture;
-
-    //Graphics painter;
-    //BufferStrategy bufferStrategy;
 
     Renderer()
     {
-//        this.painter = g;
-//
-//        this.bufferStrategy = bs;
-//
-//        if(bufferStrategy == null)
-//        {
-//            this.createBufferStrategy(3);
-//        }
     }
-    public void render(Graphics g, BufferStrategy bs, BufferedImage imageBuffer ,int xPosition, int yPosition) {
 
+    public void render(Graphics g, BufferStrategy bs, BufferedImage imageBuffer ,int xPosition, int yPosition) {
 
         g.drawImage(imageBuffer, xPosition, yPosition, null);
     }

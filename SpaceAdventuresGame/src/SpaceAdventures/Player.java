@@ -11,35 +11,9 @@ public class Player extends SpaceShip {
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
 
     public Player(float xPosition, float yPosition) {
-        super();
+        super(xPosition,yPosition);
         System.out.println("Created Player!\n");
         this.textureName = "artwork/Spaceship.png";
-
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.speed = 5;
-        this.health = 3;
-        this.team = Team.Friend;
-        this.name = 69;
-        this.width = 128;
-        this.height = 128;
-
-        try {
-            this.imageBuffer = ImageIO.read(new File(textureName));
-        } catch (IOException e) {}
-
-        gun = new DefaultSpaceShipGun();
-
-        //BufferedImage imageBuffer = new BufferedImage((int)xPosition,(int)yPosition,BufferedImage.TYPE_INT_ARGB);
-
-        //imageBuffer.getTransparency();
-
-    }
-    public Player(float xPosition, float yPosition, GameManager manager) {
-        super(xPosition,yPosition,manager);
-        System.out.println("Created Player!\n");
-        this.textureName = "artwork/Spaceship.png";
-        this.manager = manager;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.speed = 5;
@@ -60,6 +34,7 @@ public class Player extends SpaceShip {
 
 
 
+
     public Player() {
         super();
         this.health = 3;
@@ -76,11 +51,10 @@ public class Player extends SpaceShip {
 
 
 
-    @Override
-    public void fireGun() {
-        //this.projectileList.add(new Projectile(xPosition,yPosition,team,direction));
-        this.gun.spawnProjectile(xPosition,yPosition,team,direction);
-    }
+//    @Override
+//    public void fireGun() {
+//        this.gun.spawnProjectile(xPosition,yPosition,team,direction);
+//    }
 
     //@override
     public void tick()

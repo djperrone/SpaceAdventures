@@ -52,7 +52,8 @@ public class Game extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
     }
-    public synchronized void run(){
+    //public synchronized void run(){
+    public void run(){
         this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -91,12 +92,16 @@ public class Game extends Canvas implements Runnable {
     {
        return manager.objectListToArray();
     }
-    private synchronized void tick(){
+
+    //private synchronized void tick(){
+    private void tick(){
 
         manager.tick();
 
     }
-    private synchronized void render(MovableHealthyObject[] objectArray){
+
+    //private synchronized void render(MovableHealthyObject[] objectArray){
+    private  void render(MovableHealthyObject[] objectArray){
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
             this.createBufferStrategy(3);
