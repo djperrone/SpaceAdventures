@@ -20,7 +20,10 @@ public abstract class SpaceShip extends MovableHealthyObject {
         super();
     }
 
-    abstract void fireGun();
+    public void fireGun()
+    {
+        this.gun.spawnProjectile(xPosition,yPosition,team,direction);
+    }
 
     public void tick() {
     }

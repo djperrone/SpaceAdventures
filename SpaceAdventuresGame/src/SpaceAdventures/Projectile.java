@@ -27,32 +27,6 @@ public class Projectile extends MovableHealthyObject
         } catch (IOException e) {}
     }
 
-
-
-
-//    public Projectile(SpaceShip owner)
-//    {
-//        super();
-//        this.owner = owner;
-//        xPosition = owner.getxPosition();
-//        yPosition = owner.getyPosition();
-//        xVector = 0;
-//        speed = 2.0f;
-//        width = height = 80;
-//        damage = 1;
-//        textureName = "assets/asteroid2.png";
-//        this.health = 1;
-//        this.yVector = owner.direction;
-//        this.team = owner.team;
-//        this.id = ID.Projectile;
-//
-//        yVector = owner.direction;
-//
-//        try {
-//            this.imageBuffer = ImageIO.read(new File(textureName));
-//        } catch (IOException e) {}
-//    }
-
     //@Override
     public void tick()
     {

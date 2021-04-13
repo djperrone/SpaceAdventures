@@ -15,6 +15,7 @@ public class DefaultSpaceShipGun extends Gun{
     {
         this.projectileList.add(new Projectile(xPosition, yPosition, team, direction));
     }
+
     Vector<Projectile> getProjectileList()
     {
         return this.projectileList;

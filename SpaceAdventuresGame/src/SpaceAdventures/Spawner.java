@@ -23,7 +23,9 @@ public class Spawner{
 
     void spawnUFO()
     {
-        objectList.add(new UFO(r.nextFloat(),r.nextFloat()));
+        int xPos = r.nextInt(WIDTH+1) ;
+        int yPos = 10;
+        objectList.add(new UFO(xPos,yPos));
     }
 
     void spawnAsteroid()
