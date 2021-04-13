@@ -40,13 +40,10 @@ public class KeyInput extends KeyAdapter
 
         if(key == KeyEvent.VK_SPACE)
         {
-            player.ammo.add(new Projectile(player.getxPosition(), player.getyPosition(), player.team, player.getDirection()));
+            player.fireGun();
         }
 
         if(key== KeyEvent.VK_ESCAPE) System.exit(1);
-
-
-
     }
 
     public void keyReleased(KeyEvent e)

@@ -4,8 +4,8 @@ import java.util.Vector;
 
 public abstract class SpaceShip extends MovableHealthyObject {
 
-    DefaultSpaceShipGun gun;
-    Vector<Projectile> ammo;
+    protected DefaultSpaceShipGun gun;
+    //Vector<Projectile> projectileList;
 
     public SpaceShip(float xPosition, float yPosition,GameManager manager)
     {
@@ -18,7 +18,6 @@ public abstract class SpaceShip extends MovableHealthyObject {
 
     public SpaceShip() {
         super();
-
     }
 
     abstract void fireGun();

@@ -16,32 +16,27 @@ import java.util.Vector;
 // iterator cannot access current element or previous....cant change objects in enhanced for loop
 public class GameManager {
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
-    BufferedImage img;
+    private BufferedImage img;
 
-    Game game;
-    Player player;
-    Renderer renderer;
-    Spawner spawner;
-    LinkedList<MovableHealthyObject> objectList;
-    Vector<Projectile> projectileList;
+    private Game game;
+    private Player player;
+    private Renderer renderer;
+    private Spawner spawner;
+    private LinkedList<MovableHealthyObject> objectList;
 
-    long previousTime;
-    long currentTime;
-
-    GameManager(Game game,Player player)
-    {
-        this.game = game;
-        this.renderer = new Renderer();
-        this.player = player;
-        objectList = new LinkedList<MovableHealthyObject>();
-        objectList.add(player);
-        spawner = new Spawner(objectList);
-        previousTime = System.currentTimeMillis();
-        currentTime = 0;
-
-        this.projectileList = new Vector<Projectile>();
-
-    }
+    private long previousTime;
+    private long currentTime;
+//    GameManager(Game game,Player player)
+//    {
+//        this.game = game;
+//        this.renderer = new Renderer();
+//        this.player = player;
+//        objectList = new LinkedList<MovableHealthyObject>();
+//        objectList.add(player);
+//        spawner = new Spawner(objectList);
+//        previousTime = System.currentTimeMillis();
+//        currentTime = 0;
+//    }
     GameManager(Game game)
     {
         this.game = game;
@@ -53,7 +48,6 @@ public class GameManager {
         previousTime = System.currentTimeMillis();
         currentTime = 0;
         System.out.println(player.health);
-
         LinkedList<MovableHealthyObject> otherList = objectList;
 
         //objectList.toArray();
@@ -66,15 +60,14 @@ public class GameManager {
             System.out.println("Game Over ");
             game.stop();
         }
-        loadProjectiles(player.ammo);
+
+        loadPlayerProjectiles();
         checkForCollisionEvents();
         spawner.cleanAsteroids();
         spawner.cleanProjectiles();
         updateList();
 
         spawnAsteroids();
-
-        //spawner.spawnProjectiles();
 
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
@@ -84,39 +77,29 @@ public class GameManager {
         }
     }
 
-    public void loadProjectiles(Vector<Projectile> projectileVector)
+    public Player getPlayer()
     {
-        this.objectList.addAll(projectileVector);
+        return this.player;
+    }
 
-        projectileVector.clear();
+
+    public void loadPlayerProjectiles()
+    {
+
+        this.objectList.addAll(player.getGun().getProjectileList());
+
+        this.player.getGun().clearProjectileList();
     }
 
     public void render(Graphics g, BufferStrategy bs, MovableHealthyObject[] objectArray)
     {
-        //this.renderer = new Renderer(g,bs);
-        //renderer.render(g,bs,player);
 
-        //MovableHealthyObject[] listCopy = objectList.toArray(new MovableHealthyObject[objectList.size()]);
 
         for(MovableHealthyObject object : objectArray)
         {
             renderer.render(g,bs,object.getImageBuffer(), (int)object.getxPosition(), (int)object.getyPosition());
 
         }
-
-//        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
-//        {
-//            MovableHealthyObject tempObject = it.next();
-//
-//            renderer.render(g,bs,tempObject.getImageBuffer(), (int)tempObject.getxPosition(), (int)tempObject.getyPosition());
-//        }
-
-
-//        try {
-//            img = ImageIO.read(new File("assets/strawberry.jpg"));
-//        } catch (IOException e) {}
-
-        //g.drawImage(player.imageBuffer, (int) game.WIDTH/2-32, game.HEIGHT/2-32, null);
     }
 
     public void updateList()
@@ -125,11 +108,7 @@ public class GameManager {
         {
             MovableHealthyObject tempObject = it.next();
 
-            if(tempObject.isAlive())
-            {
-                //tempObject.tick();
-            }
-            else
+            if(!tempObject.isAlive())
             {
                 it.remove();
                 if(player == tempObject){
@@ -199,4 +178,18 @@ public class GameManager {
     }
 
 
+    public Renderer getRenderer()
+    {
+        return this.renderer;
+    }
+
+    MovableHealthyObject[] objectListToArray()
+    {
+        return objectList.toArray(new MovableHealthyObject[objectList.size()]);
+    }
+
+
 }
+
+
+

@@ -1,28 +1,27 @@
 package SpaceAdventures;
 
+import java.util.Vector;
+
 public class DefaultSpaceShipGun extends Gun{
-    private SpaceShip owner;
 
-    float xPosition;
-    float yPosition;
-    Team team;
-    float direction;
 
-    DefaultSpaceShipGun(float xPosition, float yPosition, Team team, float direction)
+    protected Vector<Projectile> projectileList;
+
+    public DefaultSpaceShipGun()
     {
-        super();
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.team = team;
-        this.direction = direction;
-
-
-
+        this.projectileList = new Vector<Projectile>();
+    }
+    void spawnProjectile(float xPosition, float yPosition, Team team, float direction)
+    {
+        this.projectileList.add(new Projectile(xPosition, yPosition, team, direction));
+    }
+    Vector<Projectile> getProjectileList()
+    {
+        return this.projectileList;
+    }
+    void clearProjectileList()
+    {
+        this.projectileList.clear();
     }
 
-    //@Override
-    public void spawnProjectile(float xPosition, float yPosition, Team team, float direction)
-    {
-        owner.manager.spawner.spawnProjectile(xPosition,yPosition,team,direction);
-    }
 }

@@ -30,11 +30,11 @@ public class Game extends Canvas implements Runnable {
         //renderer = new Renderer();
         manager = new GameManager(this);
 
-        this.addKeyListener(new KeyInput(manager.player));
+        this.addKeyListener(new KeyInput(manager.getPlayer()));
         new Window(WIDTH, HEIGHT, "Space Adventures", this);
 
         //a = new Asteroid(100, 1);
-        //this.addMouseListener(new MouseInput(manager.player));
+        this.addMouseListener(new MouseInput(manager.getPlayer()));
 
     }
     public synchronized void start(){
@@ -85,11 +85,11 @@ public class Game extends Canvas implements Runnable {
                 frames = 0;
             }
         }
-        //stop();
+        stop();
     }
     private synchronized MovableHealthyObject[] frozenObectList()
     {
-       return manager.objectList.toArray(new MovableHealthyObject[manager.objectList.size()]);
+       return manager.objectListToArray();
     }
     private synchronized void tick(){
 
