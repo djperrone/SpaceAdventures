@@ -23,6 +23,7 @@ public class UFO extends SpaceShip{
         this.textureName = "Artwork/UFO.png";
         this.health = 3;
         this.width = this.height = 128;
+        this.damage = 1;
 
         System.out.println("spawned ufo!");
 

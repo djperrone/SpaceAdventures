@@ -1,6 +1,7 @@
 package SpaceAdventures;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -31,6 +32,10 @@ public class Projectile extends MovableHealthyObject
     public void tick()
     {
         this.yPosition += (yVector * speed);
+    }
+    public Rectangle getBounds()
+    {
+        return new Rectangle((int)xPosition, (int)yPosition, width,height);
     }
 
 

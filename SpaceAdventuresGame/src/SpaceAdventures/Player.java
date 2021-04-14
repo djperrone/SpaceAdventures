@@ -44,10 +44,7 @@ public class Player extends SpaceShip {
         this.height = 128;
     }
 
-    public Gun getGun()
-    {
-        return  this.gun;
-    }
+
 
 
 

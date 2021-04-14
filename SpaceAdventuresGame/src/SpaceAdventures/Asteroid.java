@@ -67,7 +67,7 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int)xPosition, (int)yPosition, width = 32, height = 32);
+        return new Rectangle((int)xPosition, (int)yPosition, width, height);
     }
 
 }
