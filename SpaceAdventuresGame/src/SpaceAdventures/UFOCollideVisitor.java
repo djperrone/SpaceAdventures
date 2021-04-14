@@ -13,4 +13,12 @@ public class UFOCollideVisitor extends ACollideVisitor {
         }
     }
 
+    public void collide(final Player player)
+    {
+        if(ufo.team != player.team)
+        {
+            player.damage(ufo.damage);
+        }
+    }
+
 }

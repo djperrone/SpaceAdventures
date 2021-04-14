@@ -1,14 +1,9 @@
 package SpaceAdventures;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.Window;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.Buffer;
-import java.util.Collection;
-import java.util.Collections;
 
 public class Game extends Canvas implements Runnable {
 
@@ -23,18 +18,46 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage img;
     private final int FPS = 60;
     Asteroid a;
+    Window window;
+    //states
+    private Menu menu;
+    private DeathScreen deathscreen;
+    private Instructions instructions;
+    private Leaderboard leaderboard;
+    public enum STATE {
+        Menu,
+        InGame,
+        DeathScreen,
+        Instructions,
+        Leaderboard
+    };
+
+    //Starting game state is menu
+    public STATE gameState = STATE.Menu;
 
     public Game(){
 
         //player = new Player(100, 1);
         //renderer = new Renderer();
         manager = new GameManager(this);
+        //all four states
+        menu = new Menu(this);
+        deathscreen = new DeathScreen();
+        instructions = new Instructions(this);
+        leaderboard = new Leaderboard(this);
 
         this.addKeyListener(new KeyInput(manager.getPlayer()));
-        new Window(WIDTH, HEIGHT, "Space Adventures", this);
+        String gameName = "Space Adventures";
+        //window = new Window(WIDTH, HEIGHT, gameName, this);
+        //new Window(WIDTH, HEIGHT, "Space Adventures", this);
+        new SpaceAdventures.Window(WIDTH, HEIGHT, "Space Adventures", this);
+
 
         //a = new Asteroid(100, 1);
         this.addMouseListener(new MouseInput(manager.getPlayer()));
+        this.addMouseListener(menu);
+        this.addMouseListener(instructions);
+        this.addMouseListener(leaderboard);
 
     }
     public synchronized void start(){
@@ -52,7 +75,6 @@ public class Game extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
     }
-    //public synchronized void run(){
     public void run(){
         this.requestFocus();
         long lastTime = System.nanoTime();
@@ -88,20 +110,29 @@ public class Game extends Canvas implements Runnable {
         }
         stop();
     }
-    private synchronized MovableHealthyObject[] frozenObectList()
+    private MovableHealthyObject[] frozenObectList()
     {
        return manager.objectListToArray();
     }
-
-    //private synchronized void tick(){
     private void tick(){
-
-        manager.tick();
+        if(gameState == STATE.InGame){
+            manager.tick();
+        }
+        else if(gameState == STATE.Menu){
+            menu.tick();
+        }
+        else if(gameState == STATE.DeathScreen){
+            deathscreen.tick();
+        }
+        else if(gameState == STATE.Instructions){
+            instructions.tick();
+        }
+        else if(gameState == STATE.Leaderboard) {
+            leaderboard.tick();
+        }
 
     }
-
-    //private synchronized void render(MovableHealthyObject[] objectArray){
-    private  void render(MovableHealthyObject[] objectArray){
+    private void render(MovableHealthyObject[] objectArray){
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
             this.createBufferStrategy(3);
@@ -112,7 +143,21 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
 
-        manager.render(g, bs, objectArray);
+        if(gameState == STATE.InGame){
+            manager.render(g, bs, objectArray);
+        }
+        else if(gameState == STATE.Menu){
+            menu.render(g);
+        }
+        else if(gameState == STATE.DeathScreen){
+            deathscreen.render(g);
+        }
+        else if(gameState == STATE.Instructions){
+            instructions.render(g);
+        }
+        else if(gameState == STATE.Leaderboard){
+            leaderboard.render(g);
+        }
 
         //manager.renderer.render(g,bs,a);
 

@@ -2,6 +2,7 @@
 package SpaceAdventures;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,6 +22,7 @@ public class UFO extends SpaceShip{
         this.gun = new DefaultSpaceShipGun();
         this.textureName = "Artwork/UFO.png";
         this.health = 3;
+        this.width = this.height = 128;
 
         System.out.println("spawned ufo!");
 
@@ -44,6 +46,12 @@ public class UFO extends SpaceShip{
     @Override
     public CollideVisitor getCollideHandler() {
         return new UFOCollideVisitor(this);
+    }
+
+    @Override
+    public Rectangle getBounds()
+    {
+        return new Rectangle((int)xPosition, (int)yPosition, width,height);
     }
 }
 
