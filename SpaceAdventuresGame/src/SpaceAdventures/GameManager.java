@@ -60,8 +60,9 @@ public class GameManager {
     public void tick()
     {
         if (!player.isAlive()) {
+            game.gameState = Game.STATE.DeathScreen;
             System.out.println("Game Over ");
-            game.stop();
+            //game.stop();
         }
 
         loadPlayerProjectiles();

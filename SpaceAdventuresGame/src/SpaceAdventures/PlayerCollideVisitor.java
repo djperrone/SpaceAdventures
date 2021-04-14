@@ -19,4 +19,6 @@ public class PlayerCollideVisitor extends ACollideVisitor {
     public void collide(final UFO ufo){
             ufo.damage(this.player.damage);
     }
+
+
 }
