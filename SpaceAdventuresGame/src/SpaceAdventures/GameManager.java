@@ -23,6 +23,7 @@ public class GameManager {
     private Renderer renderer;
     private Spawner spawner;
     private LinkedList<MovableHealthyObject> objectList;
+    //private LinkedList<UFO> UFOlist;
 
     private long asteroidPreviousTime;
     private long asteroidCurrentTime;
@@ -49,6 +50,7 @@ public class GameManager {
         this.player = new Player(500,500);
         objectList = new LinkedList<MovableHealthyObject>();
         objectList.add(player);
+        //UFOlist = new LinkedList<UFO>();
         spawner = new Spawner(objectList);
         asteroidPreviousTime = UFOPreviousTime = System.currentTimeMillis();
         asteroidCurrentTime = UFOCurrentTime = 0;
@@ -66,6 +68,7 @@ public class GameManager {
         }
 
         loadPlayerProjectiles();
+        //loadUFOProjectiles();
         checkForCollisionEvents();
         spawner.cleanAsteroids();
         spawner.cleanProjectiles();
@@ -94,6 +97,21 @@ public class GameManager {
         this.objectList.addAll(player.getGun().getProjectileList());
 
         this.player.getGun().clearProjectileList();
+    }
+
+    public void loadUFOProjectiles()
+    {
+        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        {
+            MovableHealthyObject tempObject = it.next();
+
+            if(tempObject.getId() == ID.UFO)
+            {
+                //this.objectList.addAll(tempObject.getGun().getProjectileList());
+
+                //tempObject.getGun().clearProjectileList();
+            }
+        }
     }
 
     public void render(Graphics g, BufferStrategy bs, MovableHealthyObject[] objectArray)

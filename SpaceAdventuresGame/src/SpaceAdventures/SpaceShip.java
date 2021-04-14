@@ -27,4 +27,11 @@ public abstract class SpaceShip extends MovableHealthyObject {
 
     public void tick() {
     }
+
+    public Gun getGun()
+    {
+        return  this.gun;
+    }
+
+
 }
