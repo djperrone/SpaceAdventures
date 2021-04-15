@@ -25,10 +25,7 @@ public class GameManager {
     private LinkedList<MovableHealthyObject> objectList;
     private LinkedList<UFO> UFOlist;
 
-    private long asteroidPreviousTime;
-    private long asteroidCurrentTime;
-    private long UFOPreviousTime;
-    private long UFOCurrentTime;
+
 
 
 
@@ -52,8 +49,7 @@ public class GameManager {
         objectList.add(player);
         UFOlist = new LinkedList<UFO>();
         spawner = new Spawner(objectList, UFOlist, game.dimensions);
-        asteroidPreviousTime = UFOPreviousTime = System.currentTimeMillis();
-        asteroidCurrentTime = UFOCurrentTime = 0;
+
         System.out.println(player.health);
         LinkedList<MovableHealthyObject> otherList = objectList;
 
@@ -224,51 +220,13 @@ public class GameManager {
         objectA.accept(objectB.getCollideHandler());
     }
 
-    public void spawnAsteroids()
-    {
-        if(asteroidCurrentTime == 0)
-        {
-            spawner.spawnAsteroid();
 
-            asteroidPreviousTime = System.currentTimeMillis();
-            asteroidCurrentTime = asteroidPreviousTime;
-        }
-        else
-        {
-            asteroidCurrentTime = System.currentTimeMillis();
-            if(asteroidCurrentTime - asteroidPreviousTime >= 1000)
-            {
-                spawner.spawnAsteroid();
-
-                asteroidPreviousTime = asteroidCurrentTime;
-            }
-        }
-    }
 
     public void spawnAll()
     {
-        spawnUFOs();
-        spawnAsteroids();
+       spawner.spawnAllObjects();
     }
 
-    public void spawnUFOs()
-    {
-        if(UFOCurrentTime == 0)
-        {
-            spawner.spawnUFO();
-            UFOPreviousTime = System.currentTimeMillis();
-            UFOCurrentTime = UFOPreviousTime;
-        }
-        else
-        {
-            UFOCurrentTime = System.currentTimeMillis();
-            if(UFOCurrentTime - UFOPreviousTime >= 5000)
-            {
-                spawner.spawnUFO();
-                UFOPreviousTime = UFOCurrentTime;
-            }
-        }
-    }
 
 
     public Renderer getRenderer()

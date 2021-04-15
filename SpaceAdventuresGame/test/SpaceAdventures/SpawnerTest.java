@@ -1,5 +1,6 @@
 package SpaceAdventures;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SpawnerTest {
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
-
     Dimensions dimensions;
-
     LinkedList<MovableHealthyObject> objectList;
+    LinkedList<UFO> ufoList;
 
     private Spawner spawner;
     @BeforeEach
@@ -22,99 +22,51 @@ class SpawnerTest {
     {
         dimensions = new Dimensions(WIDTH,HEIGHT);
         objectList = new LinkedList<>();
-        //spawner = new Spawner(objectList,dimensions );
+        ufoList = new LinkedList<>();
+        dimensions = new Dimensions(WIDTH,HEIGHT);
+        spawner = new Spawner(objectList,ufoList, dimensions );
 
     }
 
-
-
-    @org.junit.jupiter.api.Test
-    void spawnPlayer() {
+    @AfterEach
+    void cleanList()
+    {
+        objectList.clear();
+        ufoList.clear();
     }
 
     @org.junit.jupiter.api.Test
-    void spawnUFO() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void spawnAsteroid() {
+    @DisplayName("Check ID of spawned object to ensure it spawns an asteroid")
+    void spawnAsteroid_check_ID() {
 
         spawner.spawnAsteroid();
-        //assert list not empty
-        // assert object type
-        // assert x, y valid
-        objectList.get(0);
+        assert (objectList.get(0).getId() == ID.Asteroid);
     }
 
+    @DisplayName("Asserts that an object is added to the list")
     void spawnAsteroid_addsToList()
     {
-        //assert list not empty, type
+        spawner.spawnAsteroid();
+        assert(objectList.size() > 0);
     }
 
+    @DisplayName("Asserts that x position of asteroid is within valid range")
     void spawnAsteroid_valid_x_position()
     {
+        spawner.spawnAsteroid();
 
+        MovableHealthyObject testAsteroid = spawner.objectList.get(0);
+
+        assert (testAsteroid.getxPosition() > dimensions.MIN_X_SPAWN && testAsteroid.getxPosition() < dimensions.MAX_X_SPAWN);
     }
+
+    @DisplayName("Asserts that y position of asteroid is within range")
     void spawnAsteroid_valid_y_position()
     {
+        spawner.spawnAsteroid();
 
-    }
+        MovableHealthyObject testAsteroid = spawner.objectList.get(0);
 
-
-
-    @Test
-    @DisplayName("Asteroid x position range test")
-    void testAsteroidXposition()
-    {
-        Asteroid testAsteroid = new Asteroid(1200, 9);
-        assert (testAsteroid.xPosition < 1280 && testAsteroid.xPosition > 128);
-    }
-    @Test
-    @DisplayName("Asteroid y position range test")
-    void testAsteroidYposition()
-    {
-        Asteroid testAsteroid = new Asteroid(500, 11);
-        assert (testAsteroid.yPosition >=10 && testAsteroid.yPosition < 100);
-    }
-
-    @Test
-    @DisplayName("UFO x position range test")
-    void testUFOxPosition()
-    {
-        UFO ufo = new UFO(1250, 9);
-        assert (ufo.xPosition < 1280 && ufo.xPosition > 128);
-    }
-    @Test
-    @DisplayName("UFO y position range test")
-    void testUFOyPosition()
-    {
-        UFO ufo = new UFO(500, 10);
-        assert (ufo.yPosition == 10);
-    }
-
-
-    @Test
-    @DisplayName("Player x position range test")
-    void testPlayerXPosition()
-    {
-        Player player = new Player(1200, 9);
-        assert (player.xPosition < 1280 && player.xPosition > 0);
-    }
-    @Test
-    @DisplayName("Player y position range test")
-    void testPlayeryPosition()
-    {
-        Player player = new Player(500, 500);
-        assert (player.yPosition > 250 && player.yPosition < 750);
-    }
-
-
-
-    @org.junit.jupiter.api.Test
-    void cleanAsteroids() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void cleanProjectiles() {
+        assert (testAsteroid.getyPosition() > dimensions.MIN_SURVIVABLE_Y && testAsteroid.getyPosition() < dimensions.MAX_SURVIVABLE_Y);
     }
 }
