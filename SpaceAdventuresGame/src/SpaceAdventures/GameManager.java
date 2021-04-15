@@ -23,7 +23,7 @@ public class GameManager {
     private Renderer renderer;
     private Spawner spawner;
     private LinkedList<MovableHealthyObject> objectList;
-    //private LinkedList<UFO> UFOlist;
+    private LinkedList<UFO> UFOlist;
 
     private long asteroidPreviousTime;
     private long asteroidCurrentTime;
@@ -47,11 +47,11 @@ public class GameManager {
     {
         this.game = game;
         this.renderer = new Renderer();
-        this.player = new Player(500,500);
+        this.player = new Player(500,750);
         objectList = new LinkedList<MovableHealthyObject>();
         objectList.add(player);
-        //UFOlist = new LinkedList<UFO>();
-        spawner = new Spawner(objectList);
+        UFOlist = new LinkedList<UFO>();
+        spawner = new Spawner(objectList, UFOlist, game.dimensions);
         asteroidPreviousTime = UFOPreviousTime = System.currentTimeMillis();
         asteroidCurrentTime = UFOCurrentTime = 0;
         System.out.println(player.health);
@@ -67,15 +67,11 @@ public class GameManager {
             //game.stop();
         }
 
-        loadPlayerProjectiles();
-        //loadUFOProjectiles();
-        checkForCollisionEvents();
-        spawner.cleanAsteroids();
-        spawner.cleanProjectiles();
-        updateList();
 
-        spawnAsteroids();
-        spawnUFOs();
+        loadAllProjectiles();
+        checkForCollisionEvents();
+        updateList();
+        spawnAll();
 
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
@@ -83,6 +79,12 @@ public class GameManager {
 
             tempObject.tick();
         }
+//        for(Iterator<UFO> it = UFOlist.iterator(); it.hasNext();)
+//        {
+//            UFO tempObject = it.next();
+//
+//            tempObject.tick();
+//        }
     }
 
     public Player getPlayer()
@@ -101,32 +103,42 @@ public class GameManager {
 
     public void loadUFOProjectiles()
     {
-        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        for(Iterator<UFO> it = UFOlist.iterator(); it.hasNext();)
         {
-            MovableHealthyObject tempObject = it.next();
+            UFO tempObject = it.next();
 
-            if(tempObject.getId() == ID.UFO)
-            {
-                //this.objectList.addAll(tempObject.getGun().getProjectileList());
+            this.objectList.addAll(tempObject.getGun().getProjectileList());
 
-                //tempObject.getGun().clearProjectileList();
-            }
+            tempObject.getGun().clearProjectileList();
+
         }
+    }
+
+    public void loadAllProjectiles()
+    {
+        loadPlayerProjectiles();
+        loadUFOProjectiles();
     }
 
     public void render(Graphics g, BufferStrategy bs, MovableHealthyObject[] objectArray)
     {
-
-
         for(MovableHealthyObject object : objectArray)
         {
             renderer.render(g,bs,object.getImageBuffer(), (int)object.getxPosition(), (int)object.getyPosition());
-
         }
+
+//        for(UFO ufo : UFOlist)
+//        {
+//            renderer.render(g,bs,ufo.getImageBuffer(), (int)ufo.getxPosition(), (int)ufo.getyPosition());
+//
+//        }
     }
 
     public void updateList()
     {
+
+        spawner.cleanObjectList();
+
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
             MovableHealthyObject tempObject = it.next();
@@ -142,6 +154,16 @@ public class GameManager {
                 }
             }
         }
+
+//        for(Iterator<UFO> it = UFOlist.iterator(); it.hasNext();)
+//        {
+//            UFO tempObject = it.next();
+//
+//            if(!tempObject.isAlive())
+//            {
+//                it.remove();
+//            }
+//        }
     }
 
     public void checkForCollisionEvents()
@@ -157,11 +179,28 @@ public class GameManager {
                     //System.out.println("Collision " + isOnSameTeam(currentObject, other));
                 }
                 if(!isOnSameTeam(currentObject, other) && isColliding(currentObject, other)){
-                    System.out.println("Collision Detected");
+                    //System.out.println("Collision Detected");
                     handleCollisionEvent(currentObject,other);
                 }
             }
         }
+
+//        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+//        {
+//            MovableHealthyObject currentObject = it.next();
+//
+//            for(Iterator<UFO> otherIt = UFOlist.iterator(); otherIt.hasNext();)
+//            {
+//                UFO other = otherIt.next();
+//                if(isColliding(currentObject, other)){
+//                    //System.out.println("Collision " + isOnSameTeam(currentObject, other));
+//                }
+//                if(!isOnSameTeam(currentObject, other) && isColliding(currentObject, other)){
+//                    System.out.println("Collision Detected");
+//                    handleCollisionEvent(currentObject,other);
+//                }
+//            }
+//        }
     }
 
     public boolean isOnSameTeam(MovableHealthyObject currentObject, MovableHealthyObject other)
@@ -174,6 +213,11 @@ public class GameManager {
         return objectA.getBounds().intersects(objectB.getBounds());
     }
 
+//    public void handleCollisionEvent(MovableHealthyObject objectA, UFO objectB)
+//    {
+//        objectA.accept(objectB.getCollideHandler());
+//    }
+
 
     public void handleCollisionEvent(MovableHealthyObject objectA, MovableHealthyObject objectB)
     {
@@ -185,7 +229,6 @@ public class GameManager {
         if(asteroidCurrentTime == 0)
         {
             spawner.spawnAsteroid();
-
 
             asteroidPreviousTime = System.currentTimeMillis();
             asteroidCurrentTime = asteroidPreviousTime;
@@ -200,6 +243,12 @@ public class GameManager {
                 asteroidPreviousTime = asteroidCurrentTime;
             }
         }
+    }
+
+    public void spawnAll()
+    {
+        spawnUFOs();
+        spawnAsteroids();
     }
 
     public void spawnUFOs()

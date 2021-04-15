@@ -8,9 +8,12 @@ import java.awt.image.BufferedImage;
 public class Game extends Canvas implements Runnable {
 
     private static final long serialVersionUID = 8886785132605953826L;
+    //default width, height
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
     private Thread thread;
     private boolean running = false;
+
+    public Dimensions dimensions;
 
     private GameManager manager;
     //private Renderer renderer;
@@ -32,6 +35,18 @@ public class Game extends Canvas implements Runnable {
         Leaderboard
     };
 
+//    public static class Dimensions
+//    {
+//        public final int WIDTH, HEIGHT;
+//        public Dimensions(int width, int height)
+//        {
+//            this.WIDTH = width;
+//            this.HEIGHT = height;
+//        }
+//    }
+
+
+
     //Starting game state is menu
     public STATE gameState = STATE.Menu;
 
@@ -39,12 +54,15 @@ public class Game extends Canvas implements Runnable {
 
         //player = new Player(100, 1);
         //renderer = new Renderer();
+        dimensions = new Dimensions(WIDTH,HEIGHT);
         manager = new GameManager(this);
         //all four states
         menu = new Menu(this);
         deathscreen = new DeathScreen();
         instructions = new Instructions(this);
         leaderboard = new Leaderboard(this);
+
+
 
         this.addKeyListener(new KeyInput(manager.getPlayer()));
         String gameName = "Space Adventures";

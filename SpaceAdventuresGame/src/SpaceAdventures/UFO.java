@@ -25,6 +25,7 @@ public class UFO extends SpaceShip{
         this.width = this.height = 128;
         this.damage = 1;
 
+
         System.out.println("spawned ufo!");
 
         try {
@@ -36,7 +37,14 @@ public class UFO extends SpaceShip{
     // Fire gun on timer
     @Override
     public void fireGun() {
+        this.gun.spawnProjectile(xPosition,yPosition,team,direction);
+    }
 
+    @Override
+    public void tick()
+    {
+        //implement timer here
+        //fireGun();
     }
 
     @Override
