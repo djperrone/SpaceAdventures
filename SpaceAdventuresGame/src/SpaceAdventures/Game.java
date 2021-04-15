@@ -35,25 +35,12 @@ public class Game extends Canvas implements Runnable {
         Leaderboard
     };
 
-//    public static class Dimensions
-//    {
-//        public final int WIDTH, HEIGHT;
-//        public Dimensions(int width, int height)
-//        {
-//            this.WIDTH = width;
-//            this.HEIGHT = height;
-//        }
-//    }
-
-
-
     //Starting game state is menu
     public STATE gameState = STATE.Menu;
 
     public Game(){
 
-        //player = new Player(100, 1);
-        //renderer = new Renderer();
+
         dimensions = new Dimensions(WIDTH,HEIGHT);
         manager = new GameManager(this);
         //all four states
@@ -66,17 +53,14 @@ public class Game extends Canvas implements Runnable {
 
         this.addKeyListener(new KeyInput(manager.getPlayer()));
         String gameName = "Space Adventures";
-        //window = new Window(WIDTH, HEIGHT, gameName, this);
-        //new Window(WIDTH, HEIGHT, "Space Adventures", this);
         new SpaceAdventures.Window(WIDTH, HEIGHT, "Space Adventures", this);
 
 
-        //a = new Asteroid(100, 1);
+
         this.addMouseListener(new MouseInput(manager.getPlayer()));
         this.addMouseListener(menu);
         this.addMouseListener(instructions);
         this.addMouseListener(leaderboard);
-
     }
     public synchronized void start(){
         thread = new Thread(this);
@@ -111,12 +95,7 @@ public class Game extends Canvas implements Runnable {
             }
             if(running)
             {
-                //thread.wait(1000);
-
-                //Collection<MovableHealthyObject> synchronizedList = Collections.synchronizedList(manager.objectList);
                 render(frozenObectList());
-
-                //render(frozenObectList());
 
             }
             frames++;
@@ -177,18 +156,9 @@ public class Game extends Canvas implements Runnable {
             leaderboard.render(g);
         }
 
-        //manager.renderer.render(g,bs,a);
-
-//        try {
-//            img = ImageIO.read(new File("assets/strawberry.jpg"));
-//        } catch (IOException e) {}
-//
-//        g.drawImage(img, (int) WIDTH/2-32, HEIGHT/2-32, null);
-
 
         g.dispose();
         bs.show();
-
 
     }
 

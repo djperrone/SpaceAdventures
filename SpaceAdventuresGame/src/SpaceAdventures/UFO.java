@@ -45,6 +45,8 @@ public class UFO extends SpaceShip{
     {
         //implement timer here
         //fireGun();
+
+        //implement movement controller here
     }
 
     @Override

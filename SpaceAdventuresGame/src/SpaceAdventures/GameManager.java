@@ -60,7 +60,6 @@ public class GameManager {
         if (!player.isAlive()) {
             game.gameState = Game.STATE.DeathScreen;
             System.out.println("Game Over ");
-            //game.stop();
         }
 
 
@@ -75,12 +74,7 @@ public class GameManager {
 
             tempObject.tick();
         }
-//        for(Iterator<UFO> it = UFOlist.iterator(); it.hasNext();)
-//        {
-//            UFO tempObject = it.next();
-//
-//            tempObject.tick();
-//        }
+
     }
 
     public Player getPlayer()
@@ -122,12 +116,6 @@ public class GameManager {
         {
             renderer.render(g,bs,object.getImageBuffer(), (int)object.getxPosition(), (int)object.getyPosition());
         }
-
-//        for(UFO ufo : UFOlist)
-//        {
-//            renderer.render(g,bs,ufo.getImageBuffer(), (int)ufo.getxPosition(), (int)ufo.getyPosition());
-//
-//        }
     }
 
     public void updateList()
@@ -150,16 +138,6 @@ public class GameManager {
                 }
             }
         }
-
-//        for(Iterator<UFO> it = UFOlist.iterator(); it.hasNext();)
-//        {
-//            UFO tempObject = it.next();
-//
-//            if(!tempObject.isAlive())
-//            {
-//                it.remove();
-//            }
-//        }
     }
 
     public void checkForCollisionEvents()
@@ -180,23 +158,6 @@ public class GameManager {
                 }
             }
         }
-
-//        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
-//        {
-//            MovableHealthyObject currentObject = it.next();
-//
-//            for(Iterator<UFO> otherIt = UFOlist.iterator(); otherIt.hasNext();)
-//            {
-//                UFO other = otherIt.next();
-//                if(isColliding(currentObject, other)){
-//                    //System.out.println("Collision " + isOnSameTeam(currentObject, other));
-//                }
-//                if(!isOnSameTeam(currentObject, other) && isColliding(currentObject, other)){
-//                    System.out.println("Collision Detected");
-//                    handleCollisionEvent(currentObject,other);
-//                }
-//            }
-//        }
     }
 
     public boolean isOnSameTeam(MovableHealthyObject currentObject, MovableHealthyObject other)
@@ -209,36 +170,26 @@ public class GameManager {
         return objectA.getBounds().intersects(objectB.getBounds());
     }
 
-//    public void handleCollisionEvent(MovableHealthyObject objectA, UFO objectB)
-//    {
-//        objectA.accept(objectB.getCollideHandler());
-//    }
-
-
     public void handleCollisionEvent(MovableHealthyObject objectA, MovableHealthyObject objectB)
     {
         objectA.accept(objectB.getCollideHandler());
     }
-
-
 
     public void spawnAll()
     {
        spawner.spawnAllObjects();
     }
 
-
-
     public Renderer getRenderer()
     {
         return this.renderer;
     }
 
+    // Function returns object list in array form
     MovableHealthyObject[] objectListToArray()
     {
         return objectList.toArray(new MovableHealthyObject[objectList.size()]);
     }
-
 
 }
 
