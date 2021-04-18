@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.util.Vector;
 
 
-public abstract class Gun {//extends MouseAdapter {
+public abstract class Gun {
 
     protected Vector<Projectile> projectileList;
 

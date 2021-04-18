@@ -8,9 +8,12 @@ import java.awt.image.BufferedImage;
 public class Game extends Canvas implements Runnable {
 
     private static final long serialVersionUID = 8886785132605953826L;
+    //default width, height
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
     private Thread thread;
     private boolean running = false;
+
+    public Dimensions dimensions;
 
     private GameManager manager;
     //private Renderer renderer;
@@ -37,8 +40,8 @@ public class Game extends Canvas implements Runnable {
 
     public Game(){
 
-        //player = new Player(100, 1);
-        //renderer = new Renderer();
+
+        dimensions = new Dimensions(WIDTH,HEIGHT);
         manager = new GameManager(this);
         //all four states
         menu = new Menu(this);
@@ -46,19 +49,18 @@ public class Game extends Canvas implements Runnable {
         instructions = new Instructions(this);
         leaderboard = new Leaderboard(this);
 
+
+
         this.addKeyListener(new KeyInput(manager.getPlayer()));
         String gameName = "Space Adventures";
-        //window = new Window(WIDTH, HEIGHT, gameName, this);
-        //new Window(WIDTH, HEIGHT, "Space Adventures", this);
         new SpaceAdventures.Window(WIDTH, HEIGHT, "Space Adventures", this);
 
 
-        //a = new Asteroid(100, 1);
+
         this.addMouseListener(new MouseInput(manager.getPlayer()));
         this.addMouseListener(menu);
         this.addMouseListener(instructions);
         this.addMouseListener(leaderboard);
-
     }
     public synchronized void start(){
         thread = new Thread(this);
@@ -93,12 +95,7 @@ public class Game extends Canvas implements Runnable {
             }
             if(running)
             {
-                //thread.wait(1000);
-
-                //Collection<MovableHealthyObject> synchronizedList = Collections.synchronizedList(manager.objectList);
                 render(frozenObectList());
-
-                //render(frozenObectList());
 
             }
             frames++;
@@ -159,18 +156,9 @@ public class Game extends Canvas implements Runnable {
             leaderboard.render(g);
         }
 
-        //manager.renderer.render(g,bs,a);
-
-//        try {
-//            img = ImageIO.read(new File("assets/strawberry.jpg"));
-//        } catch (IOException e) {}
-//
-//        g.drawImage(img, (int) WIDTH/2-32, HEIGHT/2-32, null);
-
 
         g.dispose();
         bs.show();
-
 
     }
 
