@@ -153,7 +153,7 @@ public class Spawner{
             MovableHealthyObject tempObject = it.next();
 
             if(tempObject.getxPosition() < 0 || tempObject.getyPosition() > dimensions.MAX_SURVIVABLE_Y  ||
-                    tempObject.getxPosition() > dimensions.WIDTH + dimensions.DEFAULT_SPRITE_WIDTH || tempObject.getyPosition() < dimensions.MIN_SURVIVABLE_Y)
+                    tempObject.getxPosition() > dimensions.WIDTH * .99 || tempObject.getyPosition() < dimensions.MIN_SURVIVABLE_Y)
             {
                 System.out.println("Destroyed asteroid/projectile");
                 tempObject.setHealth(0);

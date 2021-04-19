@@ -56,7 +56,6 @@ public class Instructions extends MouseAdapter {
         g.drawString("Return", 40, 100);
 
         //instructions/controls
-        Font fnt3 = new Font("arial", 1, 50);
         g.setFont(fnt2);
         g.setColor(Color.white);
         g.drawRect(350, 150, 550, 250);
@@ -65,7 +64,16 @@ public class Instructions extends MouseAdapter {
         g.drawString("A - Left", 700, 275);
         g.drawString("S - Down", 400, 325);
         g.drawString("D - Right", 700, 325);
-        g.drawString("Space - Shoot ", 500, 375);
+        g.drawString("Space/Left Click - Shoot ", 400, 375);
+
+        Font fnt3 = new Font("arial", 1, 30);
+        g.setFont(fnt3);
+        g.setColor(Color.white);
+        g.drawString("Using the key commands above, dodge and destroy", 250, 475);
+        g.drawString("enemies and asteroids by shooting your projectiles.", 250, 525);
+        g.drawString("Watch out for enemy ships because they shoot back! ", 250, 575);
+        g.drawString("Last as long as you can and destroy many obstacles ", 250, 625);
+        g.drawString("before your health runs out to achieve a high score.", 250, 675);
 
     }
 }

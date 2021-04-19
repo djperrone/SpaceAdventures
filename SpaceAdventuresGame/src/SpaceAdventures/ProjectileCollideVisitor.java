@@ -15,7 +15,7 @@ public class ProjectileCollideVisitor extends ACollideVisitor{
 
     public void collide(final Player player){
         if(projectile.team != player.team){
-            projectile.damage(this.projectile.damage);
+            player.damage(this.projectile.damage);
         }
     }
 

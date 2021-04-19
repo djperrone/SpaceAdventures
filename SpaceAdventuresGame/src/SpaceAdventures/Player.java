@@ -20,9 +20,11 @@ public class Player extends SpaceShip {
         direction = -1;
         this.health = 3;
         this.team = Team.Friend;
+        this.id = ID.Player;
         this.name = 69;
         this.width = 128;
         this.height = 128;
+        this.damage = 1;
 
         this.gun = new DefaultSpaceShipGun();
 

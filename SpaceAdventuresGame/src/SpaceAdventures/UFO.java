@@ -8,22 +8,33 @@ import java.io.IOException;
 
 public class UFO extends SpaceShip{
 
+    private long RATE_OF_FIRE = 2000;
+    private long previousTime;
+    private long currentTime;
+
+
     public UFO(float xPosition, float yPosition, GameManager manager, String texture) {
         super();
     }
 
     public UFO(float xPosition, float yPosition) {
 
+
+
         //super(xPosition, yPosition);
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.id = ID.UFO;
+        this.team = Team.Enemy;
         this.direction = 1;
         this.gun = new DefaultSpaceShipGun();
         this.textureName = "Artwork/UFO.png";
         this.health = 3;
         this.width = this.height = 128;
         this.damage = 1;
+
+        previousTime = previousTime = System.currentTimeMillis();
+        currentTime = currentTime = 0;
 
 
         System.out.println("spawned ufo!");
@@ -43,6 +54,24 @@ public class UFO extends SpaceShip{
     @Override
     public void tick()
     {
+
+        if(currentTime == 0)
+        {
+            fireGun();
+
+            previousTime = System.currentTimeMillis();
+            currentTime = previousTime;
+        }
+        else
+        {
+            currentTime = System.currentTimeMillis();
+            if(currentTime - previousTime >= RATE_OF_FIRE)
+            {
+                fireGun();
+
+                previousTime = currentTime;
+            }
+        }
         //implement timer here
         //fireGun();
 

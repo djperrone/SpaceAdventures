@@ -28,7 +28,6 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
         name = xPosition;
 
         //this.team = Team.Enemy;
-      
 
         this.health = 1;
         name = xPosition;
