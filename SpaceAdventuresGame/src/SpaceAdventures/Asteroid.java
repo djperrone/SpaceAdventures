@@ -33,7 +33,7 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
         this.health = 1;
         name = xPosition;
 
-        this.speed = 1;
+        this.speed = 1.5f;
         this.yVelocity = 1;
         System.out.println("spawned asteroid! " + name + " " + height + " " + width);
         this.textureName = "artwork/asteroid1.png";
