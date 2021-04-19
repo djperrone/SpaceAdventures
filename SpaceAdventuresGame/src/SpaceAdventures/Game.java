@@ -155,8 +155,6 @@ public class Game extends Canvas implements Runnable {
         else if(gameState == STATE.Leaderboard){
             leaderboard.render(g);
         }
-
-
         g.dispose();
         bs.show();
 

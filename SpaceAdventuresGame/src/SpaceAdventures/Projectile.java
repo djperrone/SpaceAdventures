@@ -11,15 +11,15 @@ public class Projectile extends MovableHealthyObject
     //SpaceShip owner;
     public Projectile(float xPosition, float yPosition, Team team, float direction)
     {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+        this.xPosition = xPosition + 128/4;
+        this.yPosition = yPosition - 128/4;
         this.team = team;
         this.direction = direction;
         xVector = 0;
         speed = 5.0f;
-        width = height = 80;
+        width = height = 128;
         damage = 1;
-        textureName = "assets/asteroid2.png";
+        textureName = "Artwork/Projectile_64.png";
         this.health = 1;
         this.yVector = direction;
 

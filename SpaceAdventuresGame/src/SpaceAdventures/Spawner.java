@@ -6,16 +6,16 @@ import java.util.Random;
 
 /**
  * Class used to spawn Movable Healthy Objects
- * All objects are added to a list used by Game Manager
+ * All objects are added to a list that is used by Game Manager to run the game
  */
 public class Spawner{
-    Random r = new Random();
-    LinkedList<MovableHealthyObject> objectList;
+    private Random r = new Random();
+    private LinkedList<MovableHealthyObject> objectList;
     private LinkedList<UFO> ufoList;
 
     //public static final int dimension.WIDTH+1 = 1280, dimensions.HEIGHT = dimension.WIDTH+1/12 *9;
     Dimensions dimensions;
-    
+
     static int DEFAULT_UFO_Y_POSITION;
     static int DEFAULT_ASTEROID_Y_POSITION;
 
@@ -26,35 +26,36 @@ public class Spawner{
     private long ASTEROID_SPAWN_RATE = 1000;
     private long UFO_SPAWN_RATE = 5000;
 
+    /**
+     * Constructor creates instance of spawner
+     * Initializes objecList, ufoList, and dimensions
+     * @param objectList
+     * @param ufoList
+     * @param dimensions
+     */
     Spawner(LinkedList<MovableHealthyObject> objectList,LinkedList<UFO> ufoList, Dimensions dimensions)
     {
         this.objectList = objectList;
         this.ufoList = ufoList;
         this.dimensions = dimensions;
         DEFAULT_UFO_Y_POSITION = 10;
-        DEFAULT_ASTEROID_Y_POSITION = dimensions.MIN_SURVIVABLE_Y;
+        DEFAULT_ASTEROID_Y_POSITION = dimensions.MIN_SURVIVABLE_Y+1;
 
         asteroidPreviousTime = UFOPreviousTime = System.currentTimeMillis();
         asteroidCurrentTime = UFOCurrentTime = 0;
     }
 
-    /**
-     * Call all of the spawn functions in one place
-     */
-    void spawnAllObjects()
+    // returns objectList
+    LinkedList<MovableHealthyObject> getObjectList()
     {
-        spawnAsteroids();
-        spawnUFOs();
-    }
-
-
-    void spawnPlayer()
-    {
-        objectList.add(new Player(500,750));
+        return this.objectList;
     }
 
     /**
-     * Spawn a UFO within bounds set by dimensions
+     * Spawn a UFO within certain range of x and y values
+     * y value is set at top of the screen
+     * x value is a random number between 0 and the max allowable x value
+     * Adds ufo to both ufolist and objectlist - ufolist is used to fire projectiles
      */
     void spawnUFO()
     {
@@ -66,15 +67,35 @@ public class Spawner{
     }
 
     /**
-     * Spawn Asteroid within bounds set by dimensions
+     * Spawn Asteroid within range of x, y values
+     * asteroid should spawn above offscreen (above) and fly down onto the screen
+     * asteroid should spawn at random x locations within range of screen
      */
-
     void spawnAsteroid()
     {
         int xPos = r.nextInt(dimensions.MAX_X_SPAWN) ;
         int yPos = DEFAULT_ASTEROID_Y_POSITION;
         objectList.add(new Asteroid((float)xPos,(float)yPos));
     }
+
+    /**
+     * Call all of the spawn functions in one place
+     */
+    void spawnAllObjects()
+    {
+        spawnAsteroids();
+        spawnUFOs();
+    }
+
+    /**
+     * Called at start of game to create instance of player - added as first item on list for easy access
+     */
+    void spawnPlayer()
+    {
+        objectList.add(new Player(500,750));
+    }
+
+
 
     /**
      * Uses a timer to determine when to spawn an asteroid

@@ -17,6 +17,7 @@ class SpawnerTest {
     LinkedList<UFO> ufoList;
 
     private Spawner spawner;
+
     @BeforeEach
     void initSpawner()
     {
@@ -36,13 +37,14 @@ class SpawnerTest {
     }
 
     @org.junit.jupiter.api.Test
-    @DisplayName("Check ID of spawned object to ensure it spawns an asteroid")
+    @DisplayName("Asserts ID of spawned object is in fact Asteroid")
     void spawnAsteroid_check_ID() {
 
         spawner.spawnAsteroid();
         assert (objectList.get(0).getId() == ID.Asteroid);
     }
 
+    @org.junit.jupiter.api.Test
     @DisplayName("Asserts that an object is added to the list")
     void spawnAsteroid_addsToList()
     {
@@ -50,22 +52,24 @@ class SpawnerTest {
         assert(objectList.size() > 0);
     }
 
+    @org.junit.jupiter.api.Test
     @DisplayName("Asserts that x position of asteroid is within valid range")
     void spawnAsteroid_valid_x_position()
     {
         spawner.spawnAsteroid();
 
-        MovableHealthyObject testAsteroid = spawner.objectList.get(0);
+        MovableHealthyObject testAsteroid = spawner.getObjectList().get(0);
 
         assert (testAsteroid.getxPosition() > dimensions.MIN_X_SPAWN && testAsteroid.getxPosition() < dimensions.MAX_X_SPAWN);
     }
 
+    @org.junit.jupiter.api.Test
     @DisplayName("Asserts that y position of asteroid is within range")
     void spawnAsteroid_valid_y_position()
     {
         spawner.spawnAsteroid();
 
-        MovableHealthyObject testAsteroid = spawner.objectList.get(0);
+        MovableHealthyObject testAsteroid = spawner.getObjectList().get(0);
 
         assert (testAsteroid.getyPosition() > dimensions.MIN_SURVIVABLE_Y && testAsteroid.getyPosition() < dimensions.MAX_SURVIVABLE_Y);
     }
