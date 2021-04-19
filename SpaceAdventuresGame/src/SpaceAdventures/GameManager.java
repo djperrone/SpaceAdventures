@@ -24,6 +24,7 @@ public class GameManager {
     private Spawner spawner;
     private LinkedList<MovableHealthyObject> objectList;
     private LinkedList<UFO> UFOlist;
+    private HealthBar healthbar;
 
 
 
@@ -49,6 +50,7 @@ public class GameManager {
         objectList.add(player);
         UFOlist = new LinkedList<UFO>();
         spawner = new Spawner(objectList, UFOlist, game.dimensions);
+        this.healthbar = new HealthBar();
 
         System.out.println(player.health);
         LinkedList<MovableHealthyObject> otherList = objectList;
@@ -112,6 +114,7 @@ public class GameManager {
 
     public void render(Graphics g, BufferStrategy bs, MovableHealthyObject[] objectArray)
     {
+        healthbar.render(g, (int) player.getHealth());
         for(MovableHealthyObject object : objectArray)
         {
             renderer.render(g,bs,object.getImageBuffer(), (int)object.getxPosition(), (int)object.getyPosition());
@@ -177,7 +180,7 @@ public class GameManager {
 
     public void spawnAll()
     {
-       spawner.spawnAllObjects();
+        spawner.spawnAllObjects();
     }
 
     public Renderer getRenderer()
@@ -192,6 +195,3 @@ public class GameManager {
     }
 
 }
-
-
-

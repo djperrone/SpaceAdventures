@@ -47,7 +47,7 @@ public class Leaderboard extends MouseAdapter {
         g.setColor(Color.white);
         g.drawString("Leaderboard", 310, 110);
         //return to menu
-        Font fnt2 = new Font("arial", 1, 20);
+        Font fnt2 = new Font("arial", 1, 40);
         g.setFont(fnt2);
         g.setColor(Color.white);
         g.drawRect(20 , 40 , 170, 90);

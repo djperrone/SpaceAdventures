@@ -117,12 +117,15 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
     }
 
     public void damage (float damageValue){
-        if(this.health - damageValue < 0){
-            this.health = 0;
-        }
-        else{
-            this.health = this.health - damageValue;
-        }
+//        if(this.health - damageValue < 0){
+//            this.health = 0;
+//        }
+//        else{
+//            this.health = this.health - damageValue;
+//        }
+
+        this.health = this.health - damageValue;
+
     }
 
     public void setHealth(float health) {
