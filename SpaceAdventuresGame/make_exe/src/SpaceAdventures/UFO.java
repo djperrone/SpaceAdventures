@@ -28,7 +28,7 @@ public class UFO extends SpaceShip{
         this.team = Team.Enemy;
         this.direction = 1;
         this.gun = new DefaultSpaceShipGun();
-        this.textureName = "UFO.png";
+        this.textureName = "Artwork/UFO.png";
         this.health = 3;
         this.width = this.height = 128;
         this.damage = 1;
@@ -40,10 +40,8 @@ public class UFO extends SpaceShip{
         System.out.println("spawned ufo!");
 
         try {
-            this.imageBuffer = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(textureName));
-        } catch (Exception e) {
-            System.err.print("Trying to read UFO image: ");
-            System.err.println(e.toString());
+            this.imageBuffer = ImageIO.read(new File(textureName));
+        } catch (IOException e) {
         }
     }
 

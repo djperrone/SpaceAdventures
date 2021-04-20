@@ -18,7 +18,7 @@ public class Projectile extends MovableHealthyObject
         speed = 5.0f;
         width = height = 128;
         damage = 1;
-        textureName = "Artwork/Projectile_64.png";
+        textureName = "Projectile_64.png";
         this.health = 1;
         this.yVector = direction;
 
@@ -34,8 +34,11 @@ public class Projectile extends MovableHealthyObject
         }
 
         try {
-            this.imageBuffer = ImageIO.read(new File(textureName));
-        } catch (IOException e) {}
+            this.imageBuffer = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(textureName));
+        } catch (Exception e) {
+            System.err.print("Trying to read projectile image: ");
+            System.err.println(e.toString());
+        }
     }
 
     //@Override

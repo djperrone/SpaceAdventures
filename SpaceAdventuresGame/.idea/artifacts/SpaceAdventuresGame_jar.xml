@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SpaceAdventuresGame:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SpaceAdventuresGame_jar</output-path>
+    <root id="archive" name="SpaceAdventuresGame.jar">
+      <element id="module-output" name="SpaceAdventuresGame" />
+    </root>
+  </artifact>
+</component>

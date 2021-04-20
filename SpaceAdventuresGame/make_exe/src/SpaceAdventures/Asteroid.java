@@ -32,13 +32,11 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
         this.speed = 1.5f;
         this.yVelocity = 1;
         System.out.println("spawned asteroid! " + name + " " + height + " " + width);
-        this.textureName = "Asteroid1.png";
+        this.textureName = "Artwork/Asteroid1.png";
 
         try {
-            this.imageBuffer = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(textureName));
-        } catch (Exception e) {
-            System.err.print("Trying to read Asteroid image: ");
-            System.err.println(e.toString());
+            this.imageBuffer = ImageIO.read(new File(textureName));
+        } catch (IOException e) {
         }
     }
 
