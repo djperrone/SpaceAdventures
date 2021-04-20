@@ -116,6 +116,7 @@ local.properties
 .mtj.tmp/
 
 # Package Files #
+
 *.war
 *.nar
 *.ear

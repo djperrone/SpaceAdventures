@@ -13,7 +13,7 @@ public class Player extends SpaceShip {
     public Player(float xPosition, float yPosition) {
         super(xPosition,yPosition);
         System.out.println("Created Player!\n");
-        this.textureName = "Spaceship.png";
+        this.textureName = "Artwork/Spaceship.png";
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.speed = 5;
@@ -29,11 +29,8 @@ public class Player extends SpaceShip {
         this.gun = new DefaultSpaceShipGun();
 
         try {
-            this.imageBuffer = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(textureName));
-        } catch (Exception e) {
-            System.err.print("Trying to read player image: ");
-            System.err.println(e.toString());
-        }
+            this.imageBuffer = ImageIO.read(new File(textureName));
+        } catch (IOException e) {}
 
     }
 
