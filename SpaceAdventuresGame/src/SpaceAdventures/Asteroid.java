@@ -10,7 +10,6 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
     protected float speed;
     protected float direction;
 
-
     public Asteroid(float xPosition, float yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -24,13 +23,9 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
         this.height = 128;
         name = xPosition;
 
-        //this.team = Team.Enemy;
-
-        this.health = 1;
-        name = xPosition;
-
         this.speed = 1.5f;
-        this.yVelocity = 1;
+        this.yVelocity = 1.0f;
+
         System.out.println("spawned asteroid! " + name + " " + height + " " + width);
         this.textureName = "Asteroid1.png";
 
@@ -44,7 +39,6 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
 
     protected float xVelocity = xPosition*speed;
     protected float yVelocity = yPosition*speed;
-
 
     @Override
     public void accept(CollideVisitor visitor) {
@@ -60,12 +54,10 @@ public class Asteroid extends MovableHealthyObject implements Collidable {
     public void tick() {
         xPosition+=xVelocity;
         yPosition+=yVelocity;
-
     }
 
     @Override
     public Rectangle getBounds() {
         return new Rectangle((int)xPosition, (int)yPosition, width, height);
     }
-
 }

@@ -11,17 +11,21 @@ public class Player extends SpaceShip {
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
 
     public Player(float xPosition, float yPosition) {
+
+        //x,y,texname,health,speed,damage,direction,team,id,width,height
+
+
         super(xPosition,yPosition);
         System.out.println("Created Player!\n");
         this.textureName = "Spaceship.png";
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.speed = 5;
-        direction = -1;
+        this.direction = -1;
         this.health = 3;
         this.team = Team.Friend;
         this.id = ID.Player;
-        this.name = 69;
+        this.name = 9;
         this.width = 128;
         this.height = 64;
         this.damage = 1;
@@ -34,29 +38,36 @@ public class Player extends SpaceShip {
             System.err.print("Trying to read player image: ");
             System.err.println(e.toString());
         }
-
     }
 
-
-
-
     public Player() {
-        super();
+
+        System.out.println("Created Player!\n");
+        this.textureName = "Spaceship.png";
         this.health = 3;
         this.team = Team.Friend;
         this.name = 1;
         this.width = 128;
         this.height = 128;
+        this.xPosition = 500;
+        this.yPosition = 750;
+
+        this.speed = 5;
+        this.direction = -1;
+
+        this.id = ID.Player;
+
+        this.damage = 1;
+
+        this.gun = new DefaultSpaceShipGun();
+
+        try {
+            this.imageBuffer = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(textureName));
+        } catch (Exception e) {
+            System.err.print("Trying to read player image: ");
+            System.err.println(e.toString());
+        }
     }
-
-
-
-
-
-//    @Override
-//    public void fireGun() {
-//        this.gun.spawnProjectile(xPosition,yPosition,team,direction);
-//    }
 
     //@override
     public void tick()

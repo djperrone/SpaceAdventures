@@ -11,9 +11,6 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.Vector;
 
-// FriendProjectile and EnemyProjectile
-// or Projectile(Team)
-// iterator cannot access current element or previous....cant change objects in enhanced for loop
 public class GameManager {
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
     private BufferedImage img;
@@ -26,26 +23,11 @@ public class GameManager {
     private LinkedList<UFO> UFOlist;
     private HealthBar healthbar;
 
-
-
-
-
-    //    GameManager(Game game,Player player)
-//    {
-//        this.game = game;
-//        this.renderer = new Renderer();
-//        this.player = player;
-//        objectList = new LinkedList<MovableHealthyObject>();
-//        objectList.add(player);
-//        spawner = new Spawner(objectList);
-//        previousTime = System.currentTimeMillis();
-//        currentTime = 0;
-//    }
     GameManager(Game game)
     {
         this.game = game;
         this.renderer = new Renderer();
-        this.player = new Player(500,750);
+        this.player = new Player();
         objectList = new LinkedList<MovableHealthyObject>();
         objectList.add(player);
         UFOlist = new LinkedList<UFO>();
@@ -64,7 +46,6 @@ public class GameManager {
             System.out.println("Game Over ");
         }
 
-
         loadAllProjectiles();
         checkForCollisionEvents();
         updateList();
@@ -73,10 +54,8 @@ public class GameManager {
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
             MovableHealthyObject tempObject = it.next();
-
             tempObject.tick();
         }
-
     }
 
     public Player getPlayer()
@@ -102,7 +81,6 @@ public class GameManager {
             this.objectList.addAll(tempObject.getGun().getProjectileList());
 
             tempObject.getGun().clearProjectileList();
-
         }
     }
 
@@ -193,5 +171,4 @@ public class GameManager {
     {
         return objectList.toArray(new MovableHealthyObject[objectList.size()]);
     }
-
 }

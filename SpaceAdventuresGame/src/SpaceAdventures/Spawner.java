@@ -92,10 +92,8 @@ public class Spawner{
      */
     void spawnPlayer()
     {
-        objectList.add(new Player(500,750));
+        objectList.add(new Player());
     }
-
-
 
     /**
      * Uses a timer to determine when to spawn an asteroid
