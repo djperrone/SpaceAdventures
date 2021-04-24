@@ -1,21 +1,15 @@
 
 package SpaceAdventures;
 
-import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Iterator;
-import java.util.Vector;
 
-public class GameManager {
-    public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
-    private BufferedImage img;
 
-    private Game game;
+public class GameObjectManager {
+
     private Player player;
     private Renderer renderer;
     private Spawner spawner;
@@ -23,29 +17,20 @@ public class GameManager {
     private LinkedList<UFO> UFOlist;
     private HealthBar healthbar;
 
-    GameManager(Game game)
+
+    GameObjectManager()
     {
-        this.game = game;
-        this.renderer = new Renderer();
         this.player = new Player();
         objectList = new LinkedList<MovableHealthyObject>();
         objectList.add(player);
         UFOlist = new LinkedList<UFO>();
-        spawner = new Spawner(objectList, UFOlist, game.dimensions);
+        spawner = new Spawner(objectList, UFOlist);
         this.healthbar = new HealthBar();
-
-        System.out.println(player.health);
         LinkedList<MovableHealthyObject> otherList = objectList;
-
     }
 
     public void tick()
     {
-        if (!player.isAlive()) {
-            game.gameState = Game.STATE.DeathScreen;
-            System.out.println("Game Over ");
-        }
-
         loadAllProjectiles();
         checkForCollisionEvents();
         updateList();
@@ -63,10 +48,8 @@ public class GameManager {
         return this.player;
     }
 
-
     public void loadPlayerProjectiles()
     {
-
         this.objectList.addAll(player.getGun().getProjectileList());
 
         this.player.getGun().clearProjectileList();
@@ -101,7 +84,6 @@ public class GameManager {
 
     public void updateList()
     {
-
         spawner.cleanObjectList();
 
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
@@ -167,7 +149,7 @@ public class GameManager {
     }
 
     // Function returns object list in array form
-    MovableHealthyObject[] objectListToArray()
+    public MovableHealthyObject[] getFrozenObjectList()
     {
         return objectList.toArray(new MovableHealthyObject[objectList.size()]);
     }

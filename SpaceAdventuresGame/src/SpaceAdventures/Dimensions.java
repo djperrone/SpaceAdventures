@@ -6,11 +6,14 @@ public class Dimensions
     public final int DEFAULT_SPRITE_WIDTH, DEFAULT_SPRITE_HEIGHT;
     public final int MIN_X_SPAWN, MAX_X_SPAWN;
     public final int MIN_SURVIVABLE_Y, MAX_SURVIVABLE_Y;
+    //public static final int WIDTH;
+    //public static final int HEIGHT;
 
-    public Dimensions(int width, int height)
+
+    public Dimensions()
     {
-        WIDTH = width;
-        HEIGHT = height;
+        WIDTH = 1280;
+        HEIGHT = WIDTH/12*9;
 
         DEFAULT_SPRITE_WIDTH = DEFAULT_SPRITE_HEIGHT = 128;
 

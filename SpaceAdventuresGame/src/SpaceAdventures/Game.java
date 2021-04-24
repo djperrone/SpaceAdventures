@@ -8,20 +8,18 @@ import java.awt.image.BufferedImage;
 public class Game extends Canvas implements Runnable {
 
     private static final long serialVersionUID = 8886785132605953826L;
-    //default width, height
-    public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
+    public final int WIDTH, HEIGHT;
     private Thread thread;
     private boolean running = false;
 
     public Dimensions dimensions;
 
-    private GameManager manager;
-    //private Renderer renderer;
-    //private Player player;
+    private GameplayManager gameplayManager;
+
     private BufferedImage img;
     private final int FPS = 60;
-    Asteroid a;
     Window window;
+
     //states
     private Menu menu;
     private DeathScreen deathscreen;
@@ -36,28 +34,27 @@ public class Game extends Canvas implements Runnable {
     };
 
     //Starting game state is menu
-    public STATE gameState = STATE.Menu;
+    public STATE gameState;
 
     public Game(){
 
+        gameplayManager = new GameplayManager(this);
+        gameState = STATE.Menu;
+        dimensions = new Dimensions();
+        WIDTH = dimensions.WIDTH;
+        HEIGHT = dimensions.HEIGHT;
 
-        dimensions = new Dimensions(WIDTH,HEIGHT);
-        manager = new GameManager(this);
         //all four states
         menu = new Menu(this);
         deathscreen = new DeathScreen();
         instructions = new Instructions(this);
         leaderboard = new Leaderboard(this);
 
-
-
-        this.addKeyListener(new KeyInput(manager.getPlayer()));
+        this.addKeyListener(new KeyInput(gameplayManager.getPlayer()));
         String gameName = "Space Adventures";
         new SpaceAdventures.Window(WIDTH, HEIGHT, "Space Adventures", this);
 
-
-
-        this.addMouseListener(new MouseInput(manager.getPlayer()));
+        this.addMouseListener(new MouseInput(gameplayManager.getPlayer()));
         this.addMouseListener(menu);
         this.addMouseListener(instructions);
         this.addMouseListener(leaderboard);
@@ -95,7 +92,8 @@ public class Game extends Canvas implements Runnable {
             }
             if(running)
             {
-                render(frozenObectList());
+                //render(frozenObectList());
+                render();
 
             }
             frames++;
@@ -107,13 +105,10 @@ public class Game extends Canvas implements Runnable {
         }
         stop();
     }
-    private MovableHealthyObject[] frozenObectList()
-    {
-       return manager.objectListToArray();
-    }
+
     private void tick(){
         if(gameState == STATE.InGame){
-            manager.tick();
+            gameplayManager.tick();
         }
         else if(gameState == STATE.Menu){
             menu.tick();
@@ -127,9 +122,10 @@ public class Game extends Canvas implements Runnable {
         else if(gameState == STATE.Leaderboard) {
             leaderboard.tick();
         }
-
     }
-    private void render(MovableHealthyObject[] objectArray){
+
+    private void render(){
+
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
             this.createBufferStrategy(3);
@@ -141,7 +137,7 @@ public class Game extends Canvas implements Runnable {
 
 
         if(gameState == STATE.InGame){
-            manager.render(g, bs, objectArray);
+            gameplayManager.render(g, bs);
         }
         else if(gameState == STATE.Menu){
             menu.render(g);
@@ -162,6 +158,5 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String args[]){
         new Game();
-
     }
 }

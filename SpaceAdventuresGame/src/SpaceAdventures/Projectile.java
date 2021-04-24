@@ -41,7 +41,7 @@ public class Projectile extends MovableHealthyObject
     //@Override
     public void tick()
     {
-        this.yPosition += (yVector * speed);
+        updateLocation();
     }
     public Rectangle getBounds()
     {
