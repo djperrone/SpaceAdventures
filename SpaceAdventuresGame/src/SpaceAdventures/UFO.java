@@ -12,16 +12,12 @@ public class UFO extends SpaceShip{
     private long previousTime;
     private long currentTime;
 
-
     public UFO(float xPosition, float yPosition, GameManager manager, String texture) {
         super();
     }
 
     public UFO(float xPosition, float yPosition) {
 
-
-
-        //super(xPosition, yPosition);
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.id = ID.UFO;
@@ -35,7 +31,6 @@ public class UFO extends SpaceShip{
 
         previousTime = previousTime = System.currentTimeMillis();
         currentTime = currentTime = 0;
-
 
         System.out.println("spawned ufo!");
 
@@ -56,7 +51,6 @@ public class UFO extends SpaceShip{
     @Override
     public void tick()
     {
-
         if(currentTime == 0)
         {
             fireGun();
@@ -70,14 +64,9 @@ public class UFO extends SpaceShip{
             if(currentTime - previousTime >= RATE_OF_FIRE)
             {
                 fireGun();
-
                 previousTime = currentTime;
             }
         }
-        //implement timer here
-        //fireGun();
-
-        //implement movement controller here
     }
 
     @Override

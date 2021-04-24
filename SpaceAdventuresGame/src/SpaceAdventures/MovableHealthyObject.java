@@ -13,77 +13,6 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
     protected float direction;
     protected float name;
 
-    /**
-     * Constructor for MovableHealthyObject
-     *
-     * @param id enum ID
-     * @param xPosition float
-     * @param yPosition float
-     * @param width int greater zero
-     * @param height int greater zero
-     * @param textureName String
-     * @param scale float greater zero
-     * @param speed float
-     * @param xVector float
-     * @param yVector float
-     * @param damage float
-     * @param health float
-     */
-    public MovableHealthyObject(ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale, float speed, float xVector, float yVector, float damage, float health){
-        super(id,xPosition,yPosition,width,height,textureName,scale);
-        this.speed=speed;
-        this.xVector=xVector;
-        this.yVector=yVector;
-        this.damage=damage;
-        this.health=health;
-    }
-
-    /**
-     * Constructor for MovableHealthyObject
-     *
-     * @param id enum ID
-     * @param xPosition float
-     * @param yPosition float
-     * @param width int greater zero
-     * @param height int greater zero
-     * @param textureName String
-     */
-    public MovableHealthyObject(ID id, float xPosition, float yPosition, int width, int height, String textureName){
-        this(id,xPosition,yPosition,width,height,textureName,1f,0f,0f,0f,1f,1f);
-    }
-
-    /**
-     * Constructor for MovableHealthyObject
-     *
-     * @param id enum ID
-     * @param xPosition float
-     * @param yPosition float
-     * @param width int greater zero
-     * @param height int greater zero
-     * @param textureName String
-     * @param scale float greater zero
-     */
-    public MovableHealthyObject(ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale){
-        this(id,xPosition,yPosition,width,height,textureName,scale,0f,0f,0f,1f,1f);
-    }
-
-    public MovableHealthyObject(float xPosition, float yPosition, GameManager manager, String texture) {
-        super();
-    }
-
-    public MovableHealthyObject() {
-        super();
-    }
-
-    public MovableHealthyObject(float getxPosition, float getyPosition) {
-        super();
-    }
-
-    public MovableHealthyObject(float xPosition, float yPosition, GameManager manager) {
-        super(xPosition,yPosition,manager);
-    }
-
-
     public float getSpeed() {
         return speed;
     }
@@ -117,15 +46,7 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
     }
 
     public void damage (float damageValue){
-//        if(this.health - damageValue < 0){
-//            this.health = 0;
-//        }
-//        else{
-//            this.health = this.health - damageValue;
-//        }
-
         this.health = this.health - damageValue;
-
     }
 
     public void setHealth(float health) {

@@ -1,8 +1,9 @@
 package SpaceAdventures;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
-public class GameObject {
+public abstract class GameObject {
 
     protected ID id;
     protected Team team;
@@ -16,59 +17,6 @@ public class GameObject {
     protected GameManager manager;
     protected BufferedImage imageBuffer;
     protected float direction;
-
-    /**
-     * Constructor for GameObject
-     *
-     * @param id enum ID
-     * @param xPosition float
-     * @param yPosition float
-     * @param width int greater zero
-     * @param height int greater zero
-     * @param textureName String
-     * @param scale float greater zero
-     */
-    public GameObject(ID id, float xPosition, float yPosition, int width, int height, String textureName, float scale) {
-        if (scale <= 0) {
-            throw new IllegalArgumentException("Scale can not be zero or less");
-        }
-        if (width <= 0) {
-            throw new IllegalArgumentException("Width can not be zero or less");
-        }
-        if (height <= 0) {
-            throw new IllegalArgumentException("Height can not be zero or less");
-        }
-        this.id = id;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.width = width;
-        this.height = height;
-        this.textureName = textureName;
-        this.scale = scale;
-    }
-    /**
-     * Constructor for GameObject
-     *
-     * @param id enum ID
-     * @param xPosition float
-     * @param yPosition float
-     * @param width int greater zero
-     * @param height int greater zero
-     * @param textureName String
-     */
-    public GameObject(ID id, float xPosition, float yPosition, int width, int height, String textureName) {
-        this(id,xPosition,yPosition,width,height,textureName,1f);
-    }
-
-    public GameObject() {
-
-    }
-
-    public GameObject(float xPosition, float yPosition, GameManager manager) {
-
-
-    }
-
 
     public ID getId() {
         return id;
@@ -134,6 +82,5 @@ public class GameObject {
         }
         this.scale = scale;
     }
-
 
 }

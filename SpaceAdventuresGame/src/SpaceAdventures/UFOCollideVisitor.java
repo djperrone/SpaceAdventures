@@ -20,5 +20,4 @@ public class UFOCollideVisitor extends ACollideVisitor {
             player.damage(ufo.damage);
         }
     }
-
 }

@@ -51,29 +51,27 @@ public class KeyInput extends KeyAdapter
         int key = e.getKeyCode();
         //System.out.println("Asdasdasdasd" + key);
 
-
-            //key events
-            if (key == KeyEvent.VK_W) {
-                w = false;
-                if (s) player.setyVector(1);
-                else player.setyVector(0);
-            }
-            if (key == KeyEvent.VK_S) {
-                s = false;
-                if (w) player.setyVector(-1);
-                else player.setyVector(0);
-            }
-            if (key == KeyEvent.VK_D) {
-                d = false;
-                if (a) player.setxVector(-1);
-                else player.setxVector(0);
-            }
-            if (key == KeyEvent.VK_A) {
-                a = false;
-                if (d) player.setxVector(1);
-                else player.setxVector(0);
-            }
-
+        //key events
+        if (key == KeyEvent.VK_W) {
+            w = false;
+            if (s) player.setyVector(1);
+            else player.setyVector(0);
+        }
+        if (key == KeyEvent.VK_S) {
+            s = false;
+            if (w) player.setyVector(-1);
+            else player.setyVector(0);
+        }
+        if (key == KeyEvent.VK_D) {
+            d = false;
+            if (a) player.setxVector(-1);
+            else player.setxVector(0);
+        }
+        if (key == KeyEvent.VK_A) {
+            a = false;
+            if (d) player.setxVector(1);
+            else player.setxVector(0);
+        }
 
     }
     

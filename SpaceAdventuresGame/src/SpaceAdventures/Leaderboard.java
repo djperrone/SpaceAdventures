@@ -20,8 +20,6 @@ public class Leaderboard extends MouseAdapter {
         }
     }
 
-
-
     public void mouseReleased(MouseEvent e) {
 
     }

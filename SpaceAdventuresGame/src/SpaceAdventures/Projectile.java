@@ -7,29 +7,26 @@ import java.io.IOException;
 
 public class Projectile extends MovableHealthyObject
 {
-
-    //SpaceShip owner;
     public Projectile(float xPosition, float yPosition, Team team, float direction)
     {
-
         this.team = team;
         this.direction = direction;
-        xVector = 0;
-        speed = 5.0f;
-        width = height = 128;
-        damage = 1;
-        textureName = "Projectile_64.png";
-        this.health = 1;
+        this.xVector = 0.0f;
         this.yVector = direction;
+        this.speed = 5.0f;
+        this.width = height = 128;
+        this.damage = 1.0f;
+        this.textureName = "Projectile_64.png";
+        this.health = 1.0f;
 
         if(this.team == Team.Friend)
         {
-            this.xPosition = xPosition + 128/4;
-            this.yPosition = yPosition - 128/4;
+            this.xPosition = xPosition + 128.0f/4;
+            this.yPosition = yPosition - 128.0f/4;
         }
         else
         {
-            this.xPosition = xPosition +128/4;
+            this.xPosition = xPosition +128.0f/4;
             this.yPosition = yPosition +128;
         }
 
