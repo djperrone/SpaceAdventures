@@ -31,13 +31,12 @@ public class Spawner{
      * Initializes objecList, ufoList, and dimensions
      * @param objectList
      * @param ufoList
-     * @param dimensions
      */
-    Spawner(LinkedList<MovableHealthyObject> objectList,LinkedList<UFO> ufoList, Dimensions dimensions)
+    Spawner(LinkedList<MovableHealthyObject> objectList,LinkedList<UFO> ufoList)
     {
         this.objectList = objectList;
         this.ufoList = ufoList;
-        this.dimensions = dimensions;
+        this.dimensions = new Dimensions();
         DEFAULT_UFO_Y_POSITION = 10;
         DEFAULT_ASTEROID_Y_POSITION = dimensions.MIN_SURVIVABLE_Y+1;
 

@@ -3,8 +3,6 @@ package SpaceAdventures;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class UFO extends SpaceShip{
 
@@ -12,7 +10,7 @@ public class UFO extends SpaceShip{
     private long previousTime;
     private long currentTime;
 
-    public UFO(float xPosition, float yPosition, GameManager manager, String texture) {
+    public UFO(float xPosition, float yPosition, GameplayManager manager, String texture) {
         super();
     }
 

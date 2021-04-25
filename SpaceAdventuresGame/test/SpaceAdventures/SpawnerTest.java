@@ -21,11 +21,11 @@ class SpawnerTest {
     @BeforeEach
     void initSpawner()
     {
-        dimensions = new Dimensions(WIDTH,HEIGHT);
+        dimensions = new Dimensions();
         objectList = new LinkedList<>();
         ufoList = new LinkedList<>();
-        dimensions = new Dimensions(WIDTH,HEIGHT);
-        spawner = new Spawner(objectList,ufoList, dimensions );
+        dimensions = new Dimensions();
+        spawner = new Spawner(objectList,ufoList);
 
     }
 

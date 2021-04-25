@@ -72,8 +72,9 @@ public class Player extends SpaceShip {
     //@override
     public void tick()
     {
-        this.xPosition += (this.xVector * speed);
-        this.yPosition += (this.yVector * speed);
+        //this.xPosition += (this.xVector * speed);
+        //this.yPosition += (this.yVector * speed);
+        updateLocation();
         //System.out.println(xVector + yVector);
 
         if (xPosition < 0){

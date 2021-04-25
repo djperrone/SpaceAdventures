@@ -1,6 +1,5 @@
 package SpaceAdventures;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 public abstract class GameObject {
@@ -14,7 +13,7 @@ public abstract class GameObject {
     protected int height;
     protected String textureName;
     protected float scale;
-    protected GameManager manager;
+    protected GameplayManager manager;
     protected BufferedImage imageBuffer;
     protected float direction;
 
