@@ -4,6 +4,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
+/**
+ * ProjectileManager class is responsible for aggregating a collection of all projectiles from all spaceships
+ * It returns this list so that GameObjectManager can add the projectiles to the main list of objects *
+ */
+
 public class ProjectileManager {
 
     //private LinkedList<Projectile> projectileList;
@@ -24,6 +29,10 @@ public class ProjectileManager {
         this.projectileList.clear();
     }
 
+    /**
+     * iterates through spaceship list, aggregates projectiles, clears each spaceship gun of projectiles
+     * @param spaceshipList
+     */
     public void loadAllProjectiles(LinkedList<SpaceShip> spaceshipList)
     {
         for(Iterator<SpaceShip> it = spaceshipList.iterator(); it.hasNext();)

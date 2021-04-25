@@ -4,6 +4,17 @@ package SpaceAdventures;
 import java.util.LinkedList;
 import java.util.Iterator;
 
+/**
+ *
+ * Gameobject Manager class is central manager for all game objects
+ * Main tasks involve:
+ *      - calling the tick function for each object in game
+ *      - removing objects from the main object list and directing other managers to perform specific tasks
+ * It passes tasks onto:
+ *      - spawner
+ *      - collisionManager
+ *      - projectileManager
+ */
 
 public class GameObjectManager {
 
@@ -56,7 +67,7 @@ public class GameObjectManager {
     }
     private void checkForCollisionEvents()
     {
-        collisonManager.checkForCollisionEvents(movableHealthyObjectList);
+        collisonManager.tick(movableHealthyObjectList);
     }
 
     private void loadAllProjectiles()
@@ -64,6 +75,16 @@ public class GameObjectManager {
         projectileManager.loadAllProjectiles(spaceshipList);
         movableHealthyObjectList.addAll(projectileManager.getProjectileList());
         projectileManager.clearProjectileList();
+    }
+
+    /**
+     * Calls two functions that iterate through main gameobject lists and removes
+     *  any objects that have died or gone out of bounds
+     */
+    private void cleanAllLists()
+    {
+        cleanMovableHealthyObjectList();
+        cleanSpaceshipList();
     }
 
     private void cleanMovableHealthyObjectList()
@@ -104,16 +125,6 @@ public class GameObjectManager {
         }
     }
 
-
-
-    private void cleanAllLists()
-    {
-       cleanMovableHealthyObjectList();
-       cleanSpaceshipList();
-    }
-
-
-
     public boolean isWithinBounds(MovableHealthyObject tempObject)
     {
         if(tempObject.getxPosition() < 0 || tempObject.getyPosition() > dimensions.MAX_SURVIVABLE_Y  ||
@@ -130,7 +141,7 @@ public class GameObjectManager {
 
     private void spawnAll()
     {
-        spawner.spawnAllObjects();
+        spawner.tick();
     }
 
 

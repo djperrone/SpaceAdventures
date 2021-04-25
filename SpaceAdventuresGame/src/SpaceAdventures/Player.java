@@ -15,7 +15,7 @@ public class Player extends SpaceShip {
         //x,y,texname,health,speed,damage,direction,team,id,width,height
 
 
-        super(xPosition,yPosition);
+        //super(xPosition,yPosition);
         System.out.println("Created Player!\n");
         this.textureName = "Spaceship.png";
         this.xPosition = xPosition;

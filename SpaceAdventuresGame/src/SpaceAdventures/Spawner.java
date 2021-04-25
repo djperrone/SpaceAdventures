@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * Class used to spawn Movable Healthy Objects
- * All objects are added to a list that is used by Game Manager to run the game
+ * All objects are added to a list(s) that is used by GameObjectManager
  */
 public class Spawner{
 
@@ -85,7 +85,7 @@ public class Spawner{
     /**
      * Call all of the spawn functions in one place
      */
-    void spawnAllObjects()
+    void tick()
     {
         spawnAsteroids();
         spawnUFOs();
