@@ -4,6 +4,13 @@ package SpaceAdventures;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+/**
+ * GameplayManager class handles anything related to gameplay
+ * This involves passing all renderable objects to the renderer (including healthbar, objectList returned from objectmanager)
+ *  would most likely track a score if implemented
+ * passes main responsibility of gameobjects onto the objectManager
+ */
+
 public class GameplayManager {
 
     private Game game;

@@ -14,7 +14,7 @@ class SpawnerTest {
     public static final int WIDTH = 1280, HEIGHT = WIDTH/12 *9;
     Dimensions dimensions;
     LinkedList<MovableHealthyObject> objectList;
-    LinkedList<UFO> ufoList;
+    LinkedList<SpaceShip> spaceshipList;
 
     private Spawner spawner;
 
@@ -23,9 +23,9 @@ class SpawnerTest {
     {
         dimensions = new Dimensions();
         objectList = new LinkedList<>();
-        ufoList = new LinkedList<>();
+        spaceshipList = new LinkedList<>();
         dimensions = new Dimensions();
-        spawner = new Spawner(objectList,ufoList);
+        spawner = new Spawner(objectList,spaceshipList);
 
     }
 
@@ -33,7 +33,7 @@ class SpawnerTest {
     void cleanList()
     {
         objectList.clear();
-        ufoList.clear();
+        spaceshipList.clear();
     }
 
     @org.junit.jupiter.api.Test
@@ -58,7 +58,7 @@ class SpawnerTest {
     {
         spawner.spawnAsteroid();
 
-        MovableHealthyObject testAsteroid = spawner.getObjectList().get(0);
+        MovableHealthyObject testAsteroid = objectList.get(0);
 
         assert (testAsteroid.getxPosition() > dimensions.MIN_X_SPAWN && testAsteroid.getxPosition() < dimensions.MAX_X_SPAWN);
     }
@@ -69,7 +69,7 @@ class SpawnerTest {
     {
         spawner.spawnAsteroid();
 
-        MovableHealthyObject testAsteroid = spawner.getObjectList().get(0);
+        MovableHealthyObject testAsteroid = objectList.get(0);
 
         assert (testAsteroid.getyPosition() > dimensions.MIN_SURVIVABLE_Y && testAsteroid.getyPosition() < dimensions.MAX_SURVIVABLE_Y);
     }

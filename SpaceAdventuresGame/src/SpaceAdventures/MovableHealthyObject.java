@@ -95,4 +95,5 @@ public abstract class MovableHealthyObject extends GameObject implements Collida
     public CollideVisitor getCollideHandler() {
         return null;
     }
+
 }

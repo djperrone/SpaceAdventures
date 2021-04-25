@@ -1,17 +1,20 @@
 package SpaceAdventures;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
 /**
  * Class used to spawn Movable Healthy Objects
- * All objects are added to a list that is used by Game Manager to run the game
+ * All objects are added to a list(s) that is used by GameObjectManager
  */
 public class Spawner{
+
+    private Player player;
+
+
     private Random r = new Random();
     private LinkedList<MovableHealthyObject> objectList;
-    private LinkedList<UFO> ufoList;
+    private LinkedList<SpaceShip> spaceshipList;
 
     //public static final int dimension.WIDTH+1 = 1280, dimensions.HEIGHT = dimension.WIDTH+1/12 *9;
     Dimensions dimensions;
@@ -28,14 +31,14 @@ public class Spawner{
 
     /**
      * Constructor creates instance of spawner
-     * Initializes objecList, ufoList, and dimensions
+     * Initializes objecList, , and dimensions
      * @param objectList
-     * @param ufoList
+     * @param spaceshipList
      */
-    Spawner(LinkedList<MovableHealthyObject> objectList,LinkedList<UFO> ufoList)
+    Spawner(LinkedList<MovableHealthyObject> objectList, LinkedList<SpaceShip> spaceshipList)
     {
         this.objectList = objectList;
-        this.ufoList = ufoList;
+        this.spaceshipList = spaceshipList;
         this.dimensions = new Dimensions();
         DEFAULT_UFO_Y_POSITION = 10;
         DEFAULT_ASTEROID_Y_POSITION = dimensions.MIN_SURVIVABLE_Y+1;
@@ -45,10 +48,12 @@ public class Spawner{
     }
 
     // returns objectList
-    LinkedList<MovableHealthyObject> getObjectList()
-    {
-        return this.objectList;
-    }
+    //LinkedList<MovableHealthyObject> getObjectList()
+//    {
+//        return this.objectList;
+//    }
+
+
 
     /**
      * Spawn a UFO within certain range of x and y values
@@ -61,7 +66,7 @@ public class Spawner{
         int xPos = r.nextInt(dimensions.MAX_X_SPAWN) ;
         int yPos = DEFAULT_UFO_Y_POSITION;
         UFO tempUFO = new UFO(xPos, yPos);
-        ufoList.add(tempUFO);
+        spaceshipList.add(tempUFO);
         objectList.add(tempUFO);
     }
 
@@ -80,7 +85,7 @@ public class Spawner{
     /**
      * Call all of the spawn functions in one place
      */
-    void spawnAllObjects()
+    void tick()
     {
         spawnAsteroids();
         spawnUFOs();
@@ -89,10 +94,16 @@ public class Spawner{
     /**
      * Called at start of game to create instance of player - added as first item on list for easy access
      */
-    void spawnPlayer()
+    Player spawnPlayer()
     {
-        objectList.add(new Player());
+        return new Player();
     }
+
+    //public Player getPlayer()
+//    {
+//        return this.player;
+//    }
+
 
     /**
      * Uses a timer to determine when to spawn an asteroid
@@ -136,24 +147,6 @@ public class Spawner{
             {
                 spawnUFO();
                 UFOPreviousTime = UFOCurrentTime;
-            }
-        }
-    }
-
-    /**
-     * Tracks spawned objects and sets health to 0 if they go offscreen (despawner)
-     */
-    void cleanObjectList()
-    {
-        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
-        {
-            MovableHealthyObject tempObject = it.next();
-
-            if(tempObject.getxPosition() < 0 || tempObject.getyPosition() > dimensions.MAX_SURVIVABLE_Y  ||
-                    tempObject.getxPosition() > dimensions.WIDTH * .99 || tempObject.getyPosition() < dimensions.MIN_SURVIVABLE_Y)
-            {
-                System.out.println("Destroyed asteroid/projectile");
-                tempObject.setHealth(0);
             }
         }
     }
