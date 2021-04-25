@@ -23,7 +23,7 @@ public class GameObjectManager {
         movableHealthyObjectList = new LinkedList<>();
         spaceshipList = new LinkedList<>();
 
-        collisonManager = new CollisonManager(movableHealthyObjectList);
+        collisonManager = new CollisonManager();
         projectileManager = new ProjectileManager();
         spawner = new Spawner(movableHealthyObjectList, spaceshipList);
 
@@ -56,7 +56,7 @@ public class GameObjectManager {
     }
     private void checkForCollisionEvents()
     {
-        collisonManager.checkForCollisionEvents();
+        collisonManager.checkForCollisionEvents(movableHealthyObjectList);
     }
 
     private void loadAllProjectiles()
@@ -114,7 +114,7 @@ public class GameObjectManager {
 
 
 
-    boolean isWithinBounds(MovableHealthyObject tempObject)
+    public boolean isWithinBounds(MovableHealthyObject tempObject)
     {
         if(tempObject.getxPosition() < 0 || tempObject.getyPosition() > dimensions.MAX_SURVIVABLE_Y  ||
                 tempObject.getxPosition() > dimensions.WIDTH * .99 || tempObject.getyPosition() < dimensions.MIN_SURVIVABLE_Y)

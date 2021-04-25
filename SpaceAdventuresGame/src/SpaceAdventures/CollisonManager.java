@@ -5,15 +5,15 @@ import java.util.LinkedList;
 
 public class CollisonManager {
 
-    private LinkedList<MovableHealthyObject> objectList;
+   // private LinkedList<MovableHealthyObject> objectList;
 
-    CollisonManager(LinkedList<MovableHealthyObject> objectList)
+    CollisonManager()
     {
-        this.objectList = objectList;
+
     }
 
 
-    public void checkForCollisionEvents()
+    public void checkForCollisionEvents(LinkedList<MovableHealthyObject> objectList)
     {
         for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
         {
@@ -33,17 +33,17 @@ public class CollisonManager {
         }
     }
 
-    public boolean isOnSameTeam(MovableHealthyObject currentObject, MovableHealthyObject other)
+    private boolean isOnSameTeam(MovableHealthyObject currentObject, MovableHealthyObject other)
     {
         return currentObject.team == other.team;
     }
 
-    public boolean isColliding(MovableHealthyObject objectA, MovableHealthyObject objectB)
+    private boolean isColliding(MovableHealthyObject objectA, MovableHealthyObject objectB)
     {
         return objectA.getBounds().intersects(objectB.getBounds());
     }
 
-    public void handleCollisionEvent(MovableHealthyObject objectA, MovableHealthyObject objectB)
+    private void handleCollisionEvent(MovableHealthyObject objectA, MovableHealthyObject objectB)
     {
         objectA.accept(objectB.getCollideHandler());
     }
