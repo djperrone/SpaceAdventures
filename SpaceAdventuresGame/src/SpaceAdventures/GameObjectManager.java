@@ -1,9 +1,6 @@
 
 package SpaceAdventures;
 
-
-import java.awt.*;
-import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
 import java.util.Iterator;
 
@@ -11,86 +8,71 @@ import java.util.Iterator;
 public class GameObjectManager {
 
     private Player player;
-    private Renderer renderer;
+
+    private LinkedList<MovableHealthyObject> movableHealthyObjectList;
+    private LinkedList<SpaceShip> spaceshipList;
+    private Dimensions dimensions;
+
     private Spawner spawner;
-    private LinkedList<MovableHealthyObject> objectList;
-    private LinkedList<UFO> UFOlist;
-    private HealthBar healthbar;
+    private CollisonManager collisonManager;
+    private ProjectileManager projectileManager;
 
 
     GameObjectManager()
     {
-        this.player = new Player();
-        objectList = new LinkedList<MovableHealthyObject>();
-        objectList.add(player);
-        UFOlist = new LinkedList<UFO>();
-        spawner = new Spawner(objectList, UFOlist);
-        this.healthbar = new HealthBar();
-        LinkedList<MovableHealthyObject> otherList = objectList;
+        movableHealthyObjectList = new LinkedList<>();
+        spaceshipList = new LinkedList<>();
+
+        collisonManager = new CollisonManager(movableHealthyObjectList);
+        projectileManager = new ProjectileManager();
+        spawner = new Spawner(movableHealthyObjectList, spaceshipList);
+
+        initPlayer();
+        dimensions = new Dimensions();
+    }
+
+    private void initPlayer()
+    {
+        player = spawner.spawnPlayer();
+        movableHealthyObjectList.add(player);
+        spaceshipList.add(player);
     }
 
     public void tick()
     {
         loadAllProjectiles();
         checkForCollisionEvents();
-        updateList();
+        cleanAllLists();
         spawnAll();
 
-        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        for(Iterator<MovableHealthyObject> it = movableHealthyObjectList.iterator(); it.hasNext();)
         {
             MovableHealthyObject tempObject = it.next();
             tempObject.tick();
         }
+
+        //System.out.println(this.spaceshipList.size() + "spacelist size");
+        //System.out.println(this.movableHealthyObjectList.size() + "movableHealthyObject size");
+    }
+    private void checkForCollisionEvents()
+    {
+        collisonManager.checkForCollisionEvents();
     }
 
-    public Player getPlayer()
+    private void loadAllProjectiles()
     {
-        return this.player;
+        projectileManager.loadAllProjectiles(spaceshipList);
+        movableHealthyObjectList.addAll(projectileManager.getProjectileList());
+        projectileManager.clearProjectileList();
     }
 
-    public void loadPlayerProjectiles()
+    private void cleanMovableHealthyObjectList()
     {
-        this.objectList.addAll(player.getGun().getProjectileList());
-
-        this.player.getGun().clearProjectileList();
-    }
-
-    public void loadUFOProjectiles()
-    {
-        for(Iterator<UFO> it = UFOlist.iterator(); it.hasNext();)
-        {
-            UFO tempObject = it.next();
-
-            this.objectList.addAll(tempObject.getGun().getProjectileList());
-
-            tempObject.getGun().clearProjectileList();
-        }
-    }
-
-    public void loadAllProjectiles()
-    {
-        loadPlayerProjectiles();
-        loadUFOProjectiles();
-    }
-
-    public void render(Graphics g, BufferStrategy bs, MovableHealthyObject[] objectArray)
-    {
-        healthbar.render(g, (int) player.getHealth());
-        for(MovableHealthyObject object : objectArray)
-        {
-            renderer.render(g,bs,object.getImageBuffer(), (int)object.getxPosition(), (int)object.getyPosition());
-        }
-    }
-
-    public void updateList()
-    {
-        spawner.cleanObjectList();
-
-        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        for(Iterator<MovableHealthyObject> it = movableHealthyObjectList.iterator(); it.hasNext();)
         {
             MovableHealthyObject tempObject = it.next();
 
-            if(!tempObject.isAlive())
+            if(!tempObject.isAlive() || !isWithinBounds(tempObject))
             {
                 it.remove();
                 if(player == tempObject){
@@ -103,54 +85,65 @@ public class GameObjectManager {
         }
     }
 
-    public void checkForCollisionEvents()
+    private void cleanSpaceshipList()
     {
-        for(Iterator<MovableHealthyObject> it = objectList.iterator(); it.hasNext();)
+        for(Iterator<SpaceShip> it = spaceshipList.iterator(); it.hasNext();)
         {
-            MovableHealthyObject currentObject = it.next();
+            SpaceShip tempObject = it.next();
 
-            for(Iterator<MovableHealthyObject> otherIt = objectList.iterator(); otherIt.hasNext();)
+            if(!tempObject.isAlive() || !isWithinBounds(tempObject))
             {
-                MovableHealthyObject other = otherIt.next();
-                if(isColliding(currentObject, other)){
-                    //System.out.println("Collision " + isOnSameTeam(currentObject, other));
+                it.remove();
+                if(player == tempObject){
+                    System.out.println("player removed");
                 }
-                if(!isOnSameTeam(currentObject, other) && isColliding(currentObject, other)){
-                    //System.out.println("Collision Detected");
-                    handleCollisionEvent(currentObject,other);
+                else{
+                    System.out.println("something removed");
                 }
             }
         }
     }
 
-    public boolean isOnSameTeam(MovableHealthyObject currentObject, MovableHealthyObject other)
+
+
+    private void cleanAllLists()
     {
-        return currentObject.team == other.team;
+       cleanMovableHealthyObjectList();
+       cleanSpaceshipList();
     }
 
-    public boolean isColliding(MovableHealthyObject objectA, MovableHealthyObject objectB)
+
+
+    boolean isWithinBounds(MovableHealthyObject tempObject)
     {
-        return objectA.getBounds().intersects(objectB.getBounds());
+        if(tempObject.getxPosition() < 0 || tempObject.getyPosition() > dimensions.MAX_SURVIVABLE_Y  ||
+                tempObject.getxPosition() > dimensions.WIDTH * .99 || tempObject.getyPosition() < dimensions.MIN_SURVIVABLE_Y)
+        {
+            System.out.println("Destroyed asteroid/projectile");
+            //tempObject.setHealth(0);
+            return false;
+        }
+
+        return true;
     }
 
-    public void handleCollisionEvent(MovableHealthyObject objectA, MovableHealthyObject objectB)
-    {
-        objectA.accept(objectB.getCollideHandler());
-    }
 
-    public void spawnAll()
+    private void spawnAll()
     {
         spawner.spawnAllObjects();
     }
 
-    public Renderer getRenderer()
-    {
-        return this.renderer;
-    }
 
     // Function returns object list in array form
     public MovableHealthyObject[] getFrozenObjectList()
     {
-        return objectList.toArray(new MovableHealthyObject[objectList.size()]);
+        return movableHealthyObjectList.toArray(new MovableHealthyObject[movableHealthyObjectList.size()]);
     }
+
+    public Player getPlayer()
+    {
+        return this.player;
+    }
+
+
 }

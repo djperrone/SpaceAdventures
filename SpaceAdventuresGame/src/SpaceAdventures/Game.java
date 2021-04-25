@@ -18,7 +18,7 @@ public class Game extends Canvas implements Runnable {
 
     private BufferedImage img;
     private final int FPS = 60;
-    Window window;
+    //Window window;
 
     //states
     private Menu menu;
@@ -51,8 +51,9 @@ public class Game extends Canvas implements Runnable {
         leaderboard = new Leaderboard(this);
 
         this.addKeyListener(new KeyInput(gameplayManager.getPlayer()));
-        String gameName = "Space Adventures";
         new SpaceAdventures.Window(WIDTH, HEIGHT, "Space Adventures", this);
+
+        //String gameName = "Space Adventures";
 
         this.addMouseListener(new MouseInput(gameplayManager.getPlayer()));
         this.addMouseListener(menu);
