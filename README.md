@@ -1,3 +1,7 @@
+# How to run:
+Download jar file in Executable folder and double click or run in intellij.  Can download and run entire intellij project as well
+
+
 # Second Project Meeting
 1. Project Title: "Space Adventures"
     * A 2d game where the user controls a spaceship and shoots at aliens (that can shoot back), asteroids, and other objects. Players will earn more points based on what targets they shoot and how long they last without dying. 
