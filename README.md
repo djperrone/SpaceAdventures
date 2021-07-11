@@ -1,6 +1,6 @@
 # How to run:
 Download jar file in Executable folder and double click or run in intellij.  Can download and run entire intellij project as well
-
+- Source code can be found in SpaceAdventuresGame/src/SpaceAdventures
 
 # Second Project Meeting
 1. Project Title: "Space Adventures"
